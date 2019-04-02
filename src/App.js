@@ -7,7 +7,6 @@ const AppContainer = createAppContainer(rootStack);
 // main color
 // #28AE5E
 // rgb(40,174,94)
-// import Checkout from "./screen/Checkout";
 type Props = {};
 export default class App extends Component<Props> {
   render() {
@@ -15,7 +14,6 @@ export default class App extends Component<Props> {
       <Provider store={store}>
         <AppContainer />
       </Provider>
-      // <Checkout />
     );
   }
 }
