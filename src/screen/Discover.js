@@ -11,8 +11,10 @@ class Discover extends Component {
     products: []
   };
 
-  _onPress = () => {
-    this.props.navigation.navigate("Detail");
+  _onPress = id => {
+    this.props.navigation.navigate("Detail", {
+      productId: id
+    });
   };
   _onPressCart = () => {
     this.props.navigation.navigate("MyCart");
@@ -33,6 +35,7 @@ class Discover extends Component {
 
   _renderCardItem = ({ item }) => (
     <DiscoverCard
+      id={item.id}
       uri={item.uri}
       price={item.price}
       category={item.category_id}

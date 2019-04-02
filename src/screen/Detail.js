@@ -14,12 +14,20 @@ import {
   Body,
   Right
 } from "native-base";
-
+import { connect } from "react-redux";
+import { productFindById } from "../_actions";
 class Detail extends Component {
+  componentDidMount() {
+    const { navigation, productFindById } = this.props;
+    // alert(navigation.getParam("productId", "0"));
+    productFindById(navigation.getParam("productId", "0"));
+  }
+
   _onPressCart = () => {
     this.props.navigation.navigate("MyCart");
   };
   render() {
+    const { detail } = this.props;
     return (
       <Container>
         <Content>
@@ -27,22 +35,16 @@ class Detail extends Component {
             <CardItem cardBody>
               <Image
                 source={{
-                  uri:
-                    "https://cdn.shopify.com/s/files/1/1589/6833/products/ASMBUN1134_7-Luxury-White-Anggrek-In--Vase_133c5686-fe67-4fb9-a5fa-d8f2e10c21f3_800x.png"
+                  uri: detail[0].uri
                 }}
                 style={styles.imgContent}
               />
             </CardItem>
             <CardItem>
               <View style={styles.content}>
-                <Text style={styles.txtPrice}>Rp. 3.000.000</Text>
+                <Text style={styles.txtPrice}>Rp. {detail[0].price}</Text>
                 <Text style={styles.txtCategorie}>Anggrek</Text>
-                <Text style={styles.txtContent}>
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                  Placeat odio eius unde sunt sed cumque aut, quae corrupti
-                  velit non voluptas quos veritatis soluta ducimus obcaecati
-                  debitis rem fuga consectetur!
-                </Text>
+                <Text style={styles.txtContent}>{detail[0].desc}</Text>
                 <ScrollView horizontal={true} style={styles.tagContent}>
                   <Button
                     style={styles.btnStyle}
@@ -71,7 +73,18 @@ class Detail extends Component {
   }
 }
 
-export default Detail;
+const mapStateToProps = state => {
+  return {
+    detail: state.products.tempData
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  {
+    productFindById
+  }
+)(Detail);
 
 const styles = StyleSheet.create({
   imgContent: {

@@ -21,9 +21,9 @@ import {
   Body
 } from "native-base";
 import { Love } from "../assets/svg/Love";
-const DiscoverCard = ({ uri, price, category, _onPress, _onPressCart }) => (
+const DiscoverCard = ({ id, uri, price, category, _onPress, _onPressCart }) => (
   <Card style={styles.card}>
-    <TouchableOpacity onPress={_onPress}>
+    <TouchableOpacity onPress={() => _onPress(id)}>
       <CardItem cardBody>
         <ImageBackground
           source={{
@@ -40,7 +40,7 @@ const DiscoverCard = ({ uri, price, category, _onPress, _onPressCart }) => (
     <CardItem>
       <Left style={styles.leftTxt}>
         <View>
-          <Text style={styles.txtPrice}>{price}</Text>
+          <Text style={styles.txtPrice}>Rp. {price}</Text>
           <Text style={styles.txtDesc}>{category}</Text>
         </View>
       </Left>

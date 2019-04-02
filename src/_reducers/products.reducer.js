@@ -1,7 +1,5 @@
 import { productConstants } from "../_constants";
 
-const { PRODUCTS_GET } = productConstants;
-
 const INITIAL_STATE = {
   data: [
     {
@@ -44,6 +42,8 @@ const INITIAL_STATE = {
   tempData: []
 };
 
+const { PRODUCTS_GET, PRODUCTS_GET_ID } = productConstants;
+
 /**
  * temporary
  */
@@ -51,6 +51,10 @@ const INITIAL_STATE = {
 const filterByCategoryId = (categoryId, state) => {
   // console.log(categoryId, state);
   return state.data.filter(product => product.category_id === categoryId);
+};
+
+const findById = (id, state) => {
+  return state.data.filter(product => product.id === id);
 };
 
 /**
@@ -61,9 +65,12 @@ export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case PRODUCTS_GET:
       // console.log("tesfilter", filterByCategoryId(action.payload, state));
-      const data = filterByCategoryId(action.payload, state);
-      console.log("redu", data);
+      // const data = filterByCategoryId(action.payload, state);
+      // console.log("redu", data);
       return { ...state, tempData: filterByCategoryId(action.payload, state) };
+
+    case PRODUCTS_GET_ID:
+      return { ...state, tempData: findById(action.payload, state) };
     default:
       return state;
   }
