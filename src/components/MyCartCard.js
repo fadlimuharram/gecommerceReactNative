@@ -16,23 +16,29 @@ import {
 
 import { DeleteBtnX, PlusLogo, MinusLogo } from "../assets/svg/Love";
 
-const MyCartCard = () => (
+const MyCartCard = ({
+  uri,
+  title,
+  category,
+  price,
+  quantity,
+  _onAddQuantity
+}) => (
   <Card>
     <CardItem style={styles.card}>
       <Body style={styles.body}>
         <View style={styles.bodyLeft}>
           <Image
             source={{
-              uri:
-                "http://1.bp.blogspot.com/-C7WH1oJR4hY/TkaVuexKw5I/AAAAAAAAAso/uy2u_j_O8kM/s1600/anggrek+oncidium.jpg"
+              uri
             }}
             style={styles.imgItem}
           />
         </View>
         <View style={styles.bodyRight}>
           <View styles={styles.titleContainer}>
-            <Text style={styles.txtTitel}>Judul</Text>
-            <Text style={styles.txtCategory}>category</Text>
+            <Text style={styles.txtTitel}>{title}</Text>
+            <Text style={styles.txtCategory}>{category}</Text>
           </View>
 
           <Button small transparent style={styles.btnDelete}>
@@ -40,14 +46,14 @@ const MyCartCard = () => (
           </Button>
 
           <View style={styles.priceContainer}>
-            <Text style={styles.txtPrice}>Rp. 3.000.000</Text>
+            <Text style={styles.txtPrice}>Rp. {price}</Text>
 
             <Button transparent style={styles.btnCart}>
               <MinusLogo width="10" height="10" color="black" />
             </Button>
-            <Text style={styles.txtItemCount}>20</Text>
+            <Text style={styles.txtItemCount}>{quantity}</Text>
 
-            <Button transparent style={styles.btnCart}>
+            <Button transparent onPress={_onAddQuantity} style={styles.btnCart}>
               <PlusLogo width="10" height="10" color="black" />
             </Button>
           </View>

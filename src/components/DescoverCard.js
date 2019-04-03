@@ -21,7 +21,15 @@ import {
   Body
 } from "native-base";
 import { Love } from "../assets/svg/Love";
-const DiscoverCard = ({ id, uri, price, category, _onPress, _onPressCart }) => (
+const DiscoverCard = ({
+  id,
+  uri,
+  price,
+  category,
+  _onPress,
+  _onPressCart,
+  isOnCart
+}) => (
   <Card style={styles.card}>
     <TouchableOpacity onPress={() => _onPress(id)}>
       <CardItem cardBody>
@@ -45,9 +53,15 @@ const DiscoverCard = ({ id, uri, price, category, _onPress, _onPressCart }) => (
         </View>
       </Left>
       <Body>
-        <Button rounded onPress={_onPressCart} style={styles.btnBuy}>
-          <Text>Tambah Keranjang</Text>
-        </Button>
+        {isOnCart ? (
+          <Button disabled rounded onPress={_onPressCart}>
+            <Text>Ada di Keranjang</Text>
+          </Button>
+        ) : (
+          <Button rounded onPress={_onPressCart} style={styles.btnBuy}>
+            <Text>Tambah Keranjang</Text>
+          </Button>
+        )}
       </Body>
     </CardItem>
   </Card>

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Image, View, ImageBackground, StyleSheet } from "react-native";
 import { Container, Content, Text } from "native-base";
 import DiscoverCard from "../components/DescoverCard";
-import { productGetByCategoryId } from "../_actions";
+import { productGetByCategoryId, postCart } from "../_actions";
 import { FlatList } from "react-native-gesture-handler";
 
 class Discover extends Component {
@@ -16,7 +16,8 @@ class Discover extends Component {
       productId: id
     });
   };
-  _onPressCart = () => {
+  _onPressCart = item => {
+    this.props.postCart(item);
     this.props.navigation.navigate("MyCart");
   };
 
@@ -33,16 +34,24 @@ class Discover extends Component {
 
   _keyExtractor = (item, index) => item.id;
 
-  _renderCardItem = ({ item }) => (
-    <DiscoverCard
-      id={item.id}
-      uri={item.uri}
-      price={item.price}
-      category={item.category_id}
-      _onPress={this._onPress}
-      _onPressCart={this._onPressCart}
-    />
-  );
+  _renderCardItem = ({ item }) => {
+    let isSelected = this.props.dataCart.find(
+      (val, index) => val.id === item.id
+    );
+    isSelected = isSelected ? true : false;
+
+    return (
+      <DiscoverCard
+        id={item.id}
+        uri={item.uri}
+        price={item.price}
+        category={item.category_id}
+        _onPress={this._onPress}
+        _onPressCart={() => this._onPressCart(item)}
+        isOnCart={isSelected}
+      />
+    );
+  };
 
   _renderCard = () => {
     const { products } = this.props;
@@ -85,16 +94,17 @@ class Discover extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log("tmpdt", state.products);
   return {
-    products: state.products.tempData
+    products: state.products.tempData,
+    dataCart: state.cart.data
   };
 };
 
 export default connect(
   mapStateToProps,
   {
-    productGetByCategoryId
+    productGetByCategoryId,
+    postCart
   }
 )(Discover);
 

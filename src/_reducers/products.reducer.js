@@ -5,7 +5,7 @@ const INITIAL_STATE = {
     {
       id: 1,
       name: "Kamboja Jepang Kecil",
-      price: "20.000",
+      price: "20000",
       desc: "ini deskripsi untuk kamboja",
       uri:
         "https://bibitbunga.com/wp-content/uploads/2016/04/adenium-dalam-pot.jpg",
@@ -14,7 +14,7 @@ const INITIAL_STATE = {
     {
       id: 2,
       name: "Kamboja Jepang Besar",
-      price: "100.000",
+      price: "100000",
       desc: "ini deskripsi untuk kamboja besar",
       uri:
         "https://3.bp.blogspot.com/-JKFQyKE5rXo/WSuvU4un9XI/AAAAAAAAAUs/M0hq1HEMQtAMwaz4BK9DUak3Kwck3Al3ACLcB/s1600/Ciri-Ciri%2BTanaman%2BBonsai%2BAdenium.jpg",
@@ -23,7 +23,7 @@ const INITIAL_STATE = {
     {
       id: 3,
       name: "Rumput Laut",
-      price: "30.000",
+      price: "30000",
       desc:
         "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facilis, perspiciatis sed eaque ipsam libero debitis voluptatem vitae maxime, quis, esse corrupti ad odit laudantium enim doloribus pariatur aliquid ex alias!",
       uri:
@@ -33,7 +33,7 @@ const INITIAL_STATE = {
     {
       id: 4,
       name: "Pohon Jeruk Imlek",
-      price: "500.000",
+      price: "500000",
       desc: "ini deskripsi untuk jeruk imlek",
       uri:
         "https://media.suara.com/pictures/653x366/2018/01/30/16683-pohon-jeruk-imlek.jpg",

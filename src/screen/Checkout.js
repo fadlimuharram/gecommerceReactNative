@@ -11,11 +11,18 @@ import {
 
 class Checkout extends Component {
   state = {
+    totalCart: 0,
     number: 0,
     expiry: 0,
     cvc: 0,
     type: "visa" // will be one of [null, "visa", "master-card", "american-express", "diners-club", "discover", "jcb", "unionpay", "maestro"]
   };
+
+  componentDidMount() {
+    this.setState({
+      totalCart: this.props.navigation.getParam("totalCart", 0)
+    });
+  }
   _onChange = form => {
     const { number, expiry, cvc } = form.values;
     this.setState({
@@ -28,7 +35,7 @@ class Checkout extends Component {
     return (
       <View style={styles.content}>
         <Text style={styles.txtTotal}>TOTAL</Text>
-        <Text style={styles.txtPrice}>Rp. 3.000.000</Text>
+        <Text style={styles.txtPrice}>Rp. {this.state.totalCart}</Text>
         <CreditCardInput onChange={this._onChange} />
         <Button style={styles.btnPay} full>
           <Text style={styles.txtBtnPay}>Pay Secure</Text>

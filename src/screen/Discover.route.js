@@ -2,6 +2,7 @@ import React from "react";
 import { createBottomTabNavigator, createAppContainer } from "react-navigation";
 import Discover from "./Discover";
 import Wishlist from "./Wishlist";
+import MyCart from "./MyCart";
 import { Love, Menu } from "../assets/svg/Love";
 
 const getTabBarIcon = (navigation, focused, tintColor) => {
@@ -11,13 +12,16 @@ const getTabBarIcon = (navigation, focused, tintColor) => {
     return <Menu width="25" height="25" color="#ADADAD" />;
   } else if (routeName === "Wishlist") {
     return <Love width="25" height="25" color="#ADADAD" />;
+  } else if (routeName === "MyCart") {
+    return <Love width="25" height="25" color="#ADADAD" />;
   }
 };
 
 const TabNavigation = createBottomTabNavigator(
   {
     Discover: { screen: Discover },
-    Wishlist: { screen: Wishlist }
+    Wishlist: { screen: Wishlist },
+    MyCart: { screen: MyCart }
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
