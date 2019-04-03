@@ -8,28 +8,13 @@ import CheckoutScreen from "../screen/Checkout";
 import LoginScreen from "../screen/Login";
 import RegisterScreen from "../screen/Register";
 
-export const rootStack = createStackNavigator(
+export const authStack = createStackNavigator(
   {
     Register: {
       screen: RegisterScreen
     },
     Login: {
       screen: LoginScreen
-    },
-    Home: {
-      screen: HomeScreen
-    },
-    Discover: {
-      screen: DiscoverScreen
-    },
-    Detail: {
-      screen: DetailScreen
-    },
-    MyCart: {
-      screen: MyCartScreen
-    },
-    Checkout: {
-      screen: CheckoutScreen
     }
   },
   {

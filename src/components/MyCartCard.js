@@ -13,6 +13,9 @@ import {
   Item,
   Form
 } from "native-base";
+
+import { DeleteBtnX, PlusLogo, MinusLogo } from "../assets/svg/Love";
+
 const MyCartCard = () => (
   <Card>
     <CardItem style={styles.card}>
@@ -27,18 +30,25 @@ const MyCartCard = () => (
           />
         </View>
         <View style={styles.bodyRight}>
-          <Text style={styles.txtTitel}>Judul</Text>
-          <Text style={styles.txtCategory}>category</Text>
+          <View styles={styles.titleContainer}>
+            <Text style={styles.txtTitel}>Judul</Text>
+            <Text style={styles.txtCategory}>category</Text>
+          </View>
+
+          <Button small transparent style={styles.btnDelete}>
+            <DeleteBtnX width="10" height="10" color="black" />
+          </Button>
+
           <View style={styles.priceContainer}>
             <Text style={styles.txtPrice}>Rp. 3.000.000</Text>
 
             <Button transparent style={styles.btnCart}>
-              <Text style={styles.btnCardTxt}>-</Text>
+              <MinusLogo width="10" height="10" color="black" />
             </Button>
             <Text style={styles.txtItemCount}>20</Text>
 
             <Button transparent style={styles.btnCart}>
-              <Text style={styles.btnCardTxt}>+</Text>
+              <PlusLogo width="10" height="10" color="black" />
             </Button>
           </View>
         </View>
@@ -78,16 +88,19 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#ADADAD"
   },
+  btnDelete: {
+    position: "absolute",
+    top: 0,
+    right: 0
+  },
   txtPrice: {
     marginRight: 25,
     fontWeight: "bold"
   },
   btnCart: {
-    marginRight: 5,
-    alignSelf: "center"
+    marginLeft: 20
   },
   txtItemCount: {
-    marginRight: 5,
     backgroundColor: "white",
     padding: 15
   },

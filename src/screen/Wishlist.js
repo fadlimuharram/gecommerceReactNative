@@ -22,6 +22,13 @@ class Wishlist extends Component {
             _onPress={this._onPress}
             _onPressCart={this._onPressCart}
           />
+          <WishlistCard
+            uri="http://sandiorchid.com/wp-content/uploads/2016/06/12998571_489789244553191_441052337968027901_n.jpg"
+            price="Rp. 2.000.000"
+            category="Dendrobium"
+            _onPress={this._onPress}
+            _onPressCart={this._onPressCart}
+          />
         </Content>
       </Container>
     );

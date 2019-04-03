@@ -24,7 +24,8 @@ const INITIAL_STATE = {
       id: 3,
       name: "Rumput Laut",
       price: "30.000",
-      desc: "ini deskripsi untuk rumput laut",
+      desc:
+        "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facilis, perspiciatis sed eaque ipsam libero debitis voluptatem vitae maxime, quis, esse corrupti ad odit laudantium enim doloribus pariatur aliquid ex alias!",
       uri:
         "https://cdns.klimg.com/dream.co.id/resized/640x320/news/2018/01/11/74806/ragam-manfaat-rumput-laut-yang-berserat-1801116.jpg",
       category_id: 1

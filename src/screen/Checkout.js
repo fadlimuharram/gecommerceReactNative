@@ -27,6 +27,8 @@ class Checkout extends Component {
   render() {
     return (
       <View style={styles.content}>
+        <Text style={styles.txtTotal}>TOTAL</Text>
+        <Text style={styles.txtPrice}>Rp. 3.000.000</Text>
         <CreditCardInput onChange={this._onChange} />
         <Button style={styles.btnPay} full>
           <Text style={styles.txtBtnPay}>Pay Secure</Text>
@@ -52,5 +54,18 @@ const styles = StyleSheet.create({
   },
   txtBtnPay: {
     color: "white"
+  },
+  txtPrice: {
+    alignSelf: "center",
+    fontSize: 30,
+    color: "#28AE5E",
+    fontWeight: "bold",
+    marginBottom: 40
+  },
+  txtTotal: {
+    fontWeight: "bold",
+    fontSize: 20,
+    alignSelf: "center",
+    marginBottom: 5
   }
 });
