@@ -24,15 +24,14 @@ import LinearGradient from "react-native-linear-gradient";
 class AuthLoadingScreen extends Component {
   constructor() {
     super();
-    this._bootstrapAsyc();
+    // this._bootstrapAsyc();
   }
 
-  _bootstrapAsyc = async () => {
-    // setTimeout(() => {
-    //   this.props.navigation.navigate("Auth");
-    // }, 5000);
-    this.props.navigation.navigate("Auth");
-  };
+  // _bootstrapAsyc = async () => {
+  //   setTimeout(() => {
+  //     this.props.navigation.navigate("Auth");
+  //   }, 3000);
+  // };
   componentDidMount() {
     this.props.navigation.navigate("Auth");
   }

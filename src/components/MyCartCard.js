@@ -15,7 +15,7 @@ import {
 } from "native-base";
 
 import { DeleteBtnX, PlusLogo, MinusLogo } from "../assets/svg/Love";
-
+import { stringToRupiah } from "../_helpers";
 const MyCartCard = ({
   uri,
   title,
@@ -46,7 +46,7 @@ const MyCartCard = ({
           </Button>
 
           <View style={styles.priceContainer}>
-            <Text style={styles.txtPrice}>Rp. {price}</Text>
+            <Text style={styles.txtPrice}>{stringToRupiah(price)}</Text>
 
             <Button transparent style={styles.btnCart}>
               <MinusLogo width="10" height="10" color="black" />

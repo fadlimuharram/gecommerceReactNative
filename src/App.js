@@ -8,8 +8,8 @@ import AuthLoadingScreen from "./screen/AuthLoadingScreen";
 const AppContainer = createAppContainer(
   createSwitchNavigator({
     AuthLoading: AuthLoadingScreen,
-    App: rootStack,
-    Auth: authStack
+    App: { screen: rootStack },
+    Auth: { screen: authStack }
   })
 );
 // main color
@@ -25,3 +25,5 @@ export default class App extends Component<Props> {
     );
   }
 }
+
+console.disableYellowBox = true;

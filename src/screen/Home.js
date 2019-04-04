@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { StyleSheet, View, ImageBackground, FlatList } from "react-native";
 import { Container, Content } from "native-base";
 import HomeCard from "../components/HomeCard";
+// import { StackActions, NavigationActions } from "react-navigation";
 
 class Home extends Component {
   state = {
@@ -12,6 +13,14 @@ class Home extends Component {
   static navigationOptions = {
     title: "Home"
   };
+
+  // componentDidMount() {
+  //   const resetAction = StackActions.reset({
+  //     index: 0,
+  //     actions: [NavigationActions.navigate({ routeName: "Home" })]
+  //   });
+  //   this.props.navigation.dispatch(resetAction);
+  // }
 
   _onPress = categoryId => {
     this.props.navigation.navigate("Discover", {

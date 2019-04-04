@@ -21,6 +21,8 @@ import {
   Body
 } from "native-base";
 import { Love } from "../assets/svg/Love";
+import { stringToRupiah } from "../_helpers";
+
 const DiscoverCard = ({
   id,
   uri,
@@ -48,7 +50,7 @@ const DiscoverCard = ({
     <CardItem>
       <Left style={styles.leftTxt}>
         <View>
-          <Text style={styles.txtPrice}>Rp. {price}</Text>
+          <Text style={styles.txtPrice}>{stringToRupiah(price)}</Text>
           <Text style={styles.txtDesc}>{category}</Text>
         </View>
       </Left>

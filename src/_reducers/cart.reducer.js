@@ -1,32 +1,14 @@
 import { cartConstants } from "../_constants";
 
 const INITIAL_STATE = {
-  data: [],
-  total: 0
+  data: []
 };
 
-const { CART_POST, CART_DELETE, CART_ADD_QUANTITY } = cartConstants;
-
-/**
- * temp
- */
-const generateTotal = data => {
-  let total = 0;
-  data.forEach((val, index) => {
-    total += Number(val.price);
-  });
-  return total;
-};
-/**
- * end
- */
+const { CART_POST, CART_DELETE, CART_UPDATE } = cartConstants;
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case CART_POST:
-      // const newData = state.data.for
-      // newData.push(action.payload);
-
       let newData = [];
       state.data.forEach((val, index) => {
         newData.push({
@@ -36,7 +18,8 @@ export default (state = INITIAL_STATE, action) => {
           desc: val.desc,
           uri: val.uri,
           category_id: val.category_id,
-          quantity: 1
+          category: val.category, // dummy
+          quantity: val.quantity ? val.quantity : 1
         });
       });
 
@@ -47,12 +30,11 @@ export default (state = INITIAL_STATE, action) => {
         desc: action.payload.desc,
         uri: action.payload.uri,
         category_id: action.payload.category_id,
+        category: action.payload.category, // dummy
         quantity: 1
       });
 
-      let total = generateTotal(newData);
-
-      return { ...state, data: newData, total: total };
+      return { ...state, data: newData };
 
     case CART_DELETE:
       let dt = state.data.filter((val, index) => {
@@ -61,20 +43,8 @@ export default (state = INITIAL_STATE, action) => {
       let ttl = generateTotal(dt);
       return { ...state, data: newData, total: ttl };
 
-    case CART_ADD_QUANTITY:
-      let findIndexData = state.data.findIndex((val, index) => {
-        return val.id === action.payload;
-      });
-      let newData2 = {};
-      if (findIndexData != -1) {
-        newData2 = {
-          ...state
-        };
-        newData2.data[findIndexData].quantity =
-          newData2.data[findIndexData].quantity + 1;
-
-        return { ...state, ...newData2 };
-      }
+    case CART_UPDATE:
+      return { ...state, data: action.payload };
 
     default:
       return { ...state };

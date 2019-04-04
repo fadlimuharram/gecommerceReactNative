@@ -9,7 +9,13 @@ const INITIAL_STATE = {
       desc: "ini deskripsi untuk kamboja",
       uri:
         "https://bibitbunga.com/wp-content/uploads/2016/04/adenium-dalam-pot.jpg",
-      category_id: 2
+      category_id: 2,
+      category: {
+        id: 2,
+        name: "Tanaman Hias",
+        uri:
+          "https://www.wallpaperup.com/uploads/wallpapers/2012/07/14/6033/2d412d59ffa38ed0f6d0fff9462dbcb4-700.jpg"
+      }
     },
     {
       id: 2,
@@ -18,7 +24,13 @@ const INITIAL_STATE = {
       desc: "ini deskripsi untuk kamboja besar",
       uri:
         "https://3.bp.blogspot.com/-JKFQyKE5rXo/WSuvU4un9XI/AAAAAAAAAUs/M0hq1HEMQtAMwaz4BK9DUak3Kwck3Al3ACLcB/s1600/Ciri-Ciri%2BTanaman%2BBonsai%2BAdenium.jpg",
-      category_id: 2
+      category_id: 2,
+      category: {
+        id: 2,
+        name: "Tanaman Hias",
+        uri:
+          "https://www.wallpaperup.com/uploads/wallpapers/2012/07/14/6033/2d412d59ffa38ed0f6d0fff9462dbcb4-700.jpg"
+      }
     },
     {
       id: 3,
@@ -28,7 +40,12 @@ const INITIAL_STATE = {
         "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facilis, perspiciatis sed eaque ipsam libero debitis voluptatem vitae maxime, quis, esse corrupti ad odit laudantium enim doloribus pariatur aliquid ex alias!",
       uri:
         "https://cdns.klimg.com/dream.co.id/resized/640x320/news/2018/01/11/74806/ragam-manfaat-rumput-laut-yang-berserat-1801116.jpg",
-      category_id: 1
+      category_id: 1,
+      category: {
+        id: 1,
+        name: "Tumbuhan Akuatik",
+        uri: "https://images4.alphacoders.com/247/thumb-1920-247264.jpg"
+      }
     },
     {
       id: 4,
@@ -37,7 +54,13 @@ const INITIAL_STATE = {
       desc: "ini deskripsi untuk jeruk imlek",
       uri:
         "https://media.suara.com/pictures/653x366/2018/01/30/16683-pohon-jeruk-imlek.jpg",
-      category_id: 4
+      category_id: 4,
+      category: {
+        id: 4,
+        name: "Pohon Buah",
+        uri:
+          "http://wallsdesk.com/wp-content/uploads/2018/04/Apple-tree-Wallpaper.jpg"
+      }
     }
   ],
   tempData: []

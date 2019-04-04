@@ -16,6 +16,16 @@ class Login extends Component {
   static navigationOptions = {
     header: null
   };
+
+  componentDidMount() {
+    fetch("http://10.0.2.2:3333")
+      .then(data => data.json())
+      .then(dt => {
+        console.log(dt.greeting);
+      })
+      .catch(e => console.log(e));
+  }
+
   _toRegister = () => {
     this.props.navigation.navigate("Register");
   };

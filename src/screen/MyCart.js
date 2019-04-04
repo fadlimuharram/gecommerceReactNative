@@ -4,16 +4,68 @@ import { Container, Content, Button, Text } from "native-base";
 import MyCartCard from "../components/MyCartCard";
 import { RightArrow } from "../assets/svg/Love";
 import { connect } from "react-redux";
-import { addQuantity } from "../_actions";
+import { updatCart } from "../_actions";
+import { stringToRupiah } from "../_helpers";
 class MyCart extends Component {
+  state = {
+    data: [],
+    total: 0
+  };
   _onPress = () => {
     this.props.navigation.navigate("Checkout", {
-      totalCart: this.props.totalCart
+      totalCart: stringToRupiah(this.state.total.toString())
+    });
+  };
+
+  refreshData = () => {
+    const { dataCart } = this.props;
+    this.setState({
+      data: dataCart
+    });
+    this.countTotal();
+  };
+
+  componentDidMount() {
+    this.refreshData();
+
+    this.props.navigation.addListener("willFocus", route => {
+      this.refreshData();
+    });
+  }
+
+  countTotal = () => {
+    let total = 0;
+    this.props.dataCart.forEach((val, i) => {
+      total += val.quantity * val.price;
+    });
+    this.setState({
+      total: total
     });
   };
 
   _onAddQuantity = id => {
-    this.props.addQuantity(id);
+    const newStateData = [];
+    this.state.data.forEach((val, i) => {
+      if (val.id === id) {
+        newStateData.push({
+          id: val.id,
+          name: val.name,
+          price: val.price,
+          desc: val.desc,
+          uri: val.uri,
+          category_id: val.category_id,
+          category: val.category, //dummy
+          quantity: val.quantity + 1
+        });
+      } else {
+        newStateData.push(val);
+      }
+    });
+    this.setState({
+      data: newStateData
+    });
+    this.countTotal();
+    this.props.updatCart(newStateData);
   };
 
   _renderItem = ({ item }) => {
@@ -21,7 +73,7 @@ class MyCart extends Component {
       <MyCartCard
         uri={item.uri}
         title={item.name}
-        category={item.category_id}
+        category={item.category.name}
         price={item.price}
         quantity={item.quantity}
         _onAddQuantity={() => this._onAddQuantity(item.id)}
@@ -36,7 +88,7 @@ class MyCart extends Component {
       <Container>
         <Content>
           <FlatList
-            data={this.props.dataCart}
+            data={this.state.data}
             renderItem={this._renderItem}
             keyExtractor={this._keyExtractor}
           />
@@ -46,7 +98,9 @@ class MyCart extends Component {
         <View style={styles.contentCheckout}>
           <View>
             <Text style={styles.txtTotal}>Total</Text>
-            <Text style={styles.txtPrice}>Rp. {this.props.totalCart}</Text>
+            <Text style={styles.txtPrice}>
+              {stringToRupiah(this.state.total.toString())}
+            </Text>
           </View>
           <View>
             <Button onPress={this._onPress} style={styles.btnCheckout}>
@@ -69,7 +123,7 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { addQuantity }
+  { updatCart }
 )(MyCart);
 
 const styles = StyleSheet.create({

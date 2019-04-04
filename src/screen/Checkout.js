@@ -35,7 +35,7 @@ class Checkout extends Component {
     return (
       <View style={styles.content}>
         <Text style={styles.txtTotal}>TOTAL</Text>
-        <Text style={styles.txtPrice}>Rp. {this.state.totalCart}</Text>
+        <Text style={styles.txtPrice}>{this.state.totalCart}</Text>
         <CreditCardInput onChange={this._onChange} />
         <Button style={styles.btnPay} full>
           <Text style={styles.txtBtnPay}>Pay Secure</Text>
