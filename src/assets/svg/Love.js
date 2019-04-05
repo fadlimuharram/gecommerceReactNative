@@ -432,3 +432,27 @@ export const MapsLogo = ({ width, height, color }) => (
     />
   </Svg>
 );
+
+export const ArrowBottomToggle = ({ width, height, color }) => (
+  <Svg width={width} height={height} viewBox="0 0 201.458 201.457">
+    <Path
+      d="M193.177 46.233l8.28 8.28-100.723 100.728L0 54.495l8.28-8.279 92.46 92.46 92.437-92.443z"
+      data-original="#030303"
+      className="prefix__active-path"
+      data-old_color="#030303"
+      fill={color}
+    />
+  </Svg>
+);
+
+export const ArrowRightToggle = ({ width, height, color }) => (
+  <Svg viewBox="0 0 129 129" width={width} height={height}>
+    <Path
+      d="M40.4 121.3c-.8.8-1.8 1.2-2.9 1.2s-2.1-.4-2.9-1.2c-1.6-1.6-1.6-4.2 0-5.8l51-51-51-51c-1.6-1.6-1.6-4.2 0-5.8 1.6-1.6 4.2-1.6 5.8 0l53.9 53.9c1.6 1.6 1.6 4.2 0 5.8l-53.9 53.9z"
+      data-original="#000000"
+      className="prefix__active-path"
+      data-old_color="#000000"
+      fill={color}
+    />
+  </Svg>
+);
