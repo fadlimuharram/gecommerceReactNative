@@ -22,7 +22,8 @@ const MyCartCard = ({
   category,
   price,
   quantity,
-  _onAddQuantity
+  _onAddQuantity,
+  _onDecQuantity
 }) => (
   <Card>
     <CardItem style={styles.card}>
@@ -48,7 +49,7 @@ const MyCartCard = ({
           <View style={styles.priceContainer}>
             <Text style={styles.txtPrice}>{stringToRupiah(price)}</Text>
 
-            <Button transparent style={styles.btnCart}>
+            <Button transparent onPress={_onDecQuantity} style={styles.btnCart}>
               <MinusLogo width="10" height="10" color="black" />
             </Button>
             <Text style={styles.txtItemCount}>{quantity}</Text>

@@ -8,18 +8,16 @@ import { createMaterialBottomTabNavigator } from "react-navigation-material-bott
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Platform } from "react-native";
 
-const getTabBarIcon = (navigation, focused, tintColor) => {
-  const { routeName } = navigation.state;
-  console.log(routeName);
+// const getTabBarIcon = (navigation, focused, tintColor) => {
+//   const { routeName } = navigation.state;
+//   console.log(routeName);
 
-  if (routeName === "Discover") {
-    return <Icon name="rocket" size={30} color="#900" />;
-  } else if (routeName === "Wishlist") {
-    return <Icon name="rocket" size={30} color="#900" />;
-  } else if (routeName === "MyCart") {
-    return <Icon name="rocket" size={30} color="#900" />;
-  }
-};
+//   if (routeName === "Discover") {
+//     return <Icon name="rocket" size={30} color="#900" />;
+//   } else if (routeName === "Wishlist") {
+//     return <Icon name="rocket" size={30} color="#900" />;
+//   }
+// };
 
 // const TabNavigation = createMaterialBottomTabNavigator(
 //   {
@@ -45,7 +43,7 @@ const TabNavigation = createMaterialBottomTabNavigator(
       screen: Discover,
       navigationOptions: {
         tabBarIcon: ({ tintColor, focused }) => (
-          <Love width="20" height="20" color={tintColor} />
+          <Menu width="20" height="20" color="white" />
         )
       }
     },
@@ -56,18 +54,23 @@ const TabNavigation = createMaterialBottomTabNavigator(
           <Love width="20" height="20" color={tintColor} />
         )
       }
-    },
-    MyCart: {
-      screen: MyCart,
-      navigationOptions: {
-        tabBarIcon: ({ tintColor, focused }) => (
-          <Love width="20" height="20" color={tintColor} />
-        )
-      }
     }
+    // MyCart: {
+    //   screen: MyCart,
+    //   navigationOptions: {
+    //     tabBarIcon: ({ tintColor, focused }) => (
+    //       <Love width="20" height="20" color={tintColor} />
+    //     )
+    //   }
+    // }
   },
   {
     barStyle: { backgroundColor: "#28AE5E" }
+    // headerMode: "none",
+    // navigationOptions: {
+    //   headerVisible: false,
+    //   header: null
+    // }
   }
 );
 export default TabNavigation;

@@ -4,14 +4,10 @@ import { StyleSheet, View, ImageBackground, FlatList } from "react-native";
 import { Container, Content } from "native-base";
 import HomeCard from "../components/HomeCard";
 // import { StackActions, NavigationActions } from "react-navigation";
-
+import Header from "../components/Header";
 class Home extends Component {
   state = {
     categories: []
-  };
-
-  static navigationOptions = {
-    title: "Home"
   };
 
   // componentDidMount() {
@@ -53,6 +49,7 @@ class Home extends Component {
       console.log("tess", this.props.categories);
       return (
         <Container>
+          <Header {...this.props} />
           <Content style={styles.content}>
             <FlatList
               data={this.props.categories}

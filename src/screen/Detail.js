@@ -15,11 +15,11 @@ import {
   Right
 } from "native-base";
 import { connect } from "react-redux";
-import { productFindById } from "../_actions";
+import { productFindById, postCart } from "../_actions";
 import { CustomerStart } from "../assets/svg/Love";
 import Swiper from "react-native-swiper";
-
 import { Love } from "../assets/svg/Love";
+import { stringToRupiah } from "../_helpers";
 
 class Detail extends Component {
   componentDidMount() {
@@ -29,6 +29,7 @@ class Detail extends Component {
   }
 
   _onPressCart = () => {
+    this.props.postCart(this.props.detail[0]);
     this.props.navigation.navigate("MyCart");
   };
 
@@ -85,8 +86,12 @@ class Detail extends Component {
                 <View style={styles.headerContent}>
                   <View style={styles.headerContentLeft}>
                     <Text style={styles.txtTitle}>{detail[0].name} </Text>
-                    <Text style={styles.txtPrice}>Rp. {detail[0].price}</Text>
-                    <Text style={styles.txtCategorie}>Anggrek</Text>
+                    <Text style={styles.txtPrice}>
+                      {stringToRupiah(detail[0].price)}
+                    </Text>
+                    <Text style={styles.txtCategorie}>
+                      {detail[0].category.name}
+                    </Text>
                   </View>
                   <View style={styles.headerContentRight}>
                     <CustomerStart width="50" height="50" />
@@ -182,7 +187,8 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   {
-    productFindById
+    productFindById,
+    postCart
   }
 )(Detail);
 

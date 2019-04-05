@@ -5,10 +5,15 @@ import { Container, Content, Text } from "native-base";
 import DiscoverCard from "../components/DescoverCard";
 import { productGetByCategoryId, postCart } from "../_actions";
 import { FlatList } from "react-native-gesture-handler";
+import HeaderDiscover from "../components/HeaderDiscover";
 
 class Discover extends Component {
   state = {
     products: []
+  };
+
+  static navigationOptions = {
+    header: null
   };
 
   _onPress = id => {
@@ -18,9 +23,7 @@ class Discover extends Component {
   };
   _onPressCart = item => {
     this.props.postCart(item);
-    this.props.navigation.navigate("MyCart", {
-      newItem: item
-    });
+    this.props.navigation.navigate("MyCart");
   };
 
   componentDidMount() {
@@ -28,6 +31,10 @@ class Discover extends Component {
 
     productGetByCategoryId(navigation.getParam("categoryId", "0"));
   }
+
+  _onGoBackButton = () => {
+    this.props.navigation.navigate("Home");
+  };
 
   _keyExtractor = (item, index) => item.id;
 
@@ -66,6 +73,10 @@ class Discover extends Component {
   render() {
     return (
       <Container>
+        <HeaderDiscover
+          _onGoBackButton={this._onGoBackButton}
+          {...this.props}
+        />
         <Content style={styles.content}>{this._renderCard()}</Content>
       </Container>
     );

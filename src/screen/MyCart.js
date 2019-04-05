@@ -1,17 +1,31 @@
 import React, { Component } from "react";
-import { View, StyleSheet, FlatList } from "react-native";
-import { Container, Content, Button, Text } from "native-base";
+import { View, StyleSheet, FlatList, TouchableOpacity } from "react-native";
+import {
+  Container,
+  Content,
+  Button,
+  Text,
+  Card,
+  CardItem,
+  Body
+} from "native-base";
 import MyCartCard from "../components/MyCartCard";
-import { RightArrow } from "../assets/svg/Love";
+import { RightArrow, ArrowLeft2, MapsLogo } from "../assets/svg/Love";
 import { connect } from "react-redux";
 import { updatCart } from "../_actions";
 import { stringToRupiah } from "../_helpers";
+import Header from "../components/Header";
+import AddressCart from "../components/AddressCard";
+import { ScrollView } from "react-native-gesture-handler";
+
 class MyCart extends Component {
   state = {
     data: [],
-    total: 0
+    total: 0,
+    isMyCartShow: true
   };
-  _onPress = () => {
+
+  _onPressToCheckOut = () => {
     this.props.navigation.navigate("Checkout", {
       totalCart: stringToRupiah(this.state.total.toString())
     });
@@ -28,7 +42,7 @@ class MyCart extends Component {
   componentDidMount() {
     this.refreshData();
 
-    this.props.navigation.addListener("willFocus", route => {
+    this.props.navigation.addListener("didFocus", route => {
       this.refreshData();
     });
   }
@@ -66,6 +80,33 @@ class MyCart extends Component {
     });
     this.countTotal();
     this.props.updatCart(newStateData);
+    this.refreshData();
+  };
+
+  _onDecQuantity = id => {
+    const newStateData = [];
+    this.state.data.forEach((val, i) => {
+      if (val.id === id) {
+        newStateData.push({
+          id: val.id,
+          name: val.name,
+          price: val.price,
+          desc: val.desc,
+          uri: val.uri,
+          category_id: val.category_id,
+          category: val.category, //dummy
+          quantity: val.quantity - 1
+        });
+      } else {
+        newStateData.push(val);
+      }
+    });
+    this.setState({
+      data: newStateData
+    });
+    this.countTotal();
+    this.props.updatCart(newStateData);
+    this.refreshData();
   };
 
   _renderItem = ({ item }) => {
@@ -77,15 +118,16 @@ class MyCart extends Component {
         price={item.price}
         quantity={item.quantity}
         _onAddQuantity={() => this._onAddQuantity(item.id)}
+        _onDecQuantity={() => this._onDecQuantity(item.id)}
       />
     );
   };
 
   _keyExtractor = (item, index) => item.id;
 
-  render() {
-    return (
-      <Container>
+  renderMyCart = () => {
+    if (this.state.isMyCartShow) {
+      return (
         <Content>
           <FlatList
             data={this.state.data}
@@ -95,6 +137,62 @@ class MyCart extends Component {
 
           <View style={styles.break} />
         </Content>
+      );
+    } else {
+      return (
+        <Content>
+          <Card>
+            <CardItem>
+              <Body>
+                <AddressCart _onPress={this._onPressToCheckOut} />
+                <AddressCart _onPress={this._onPressToCheckOut} />
+                <AddressCart _onPress={this._onPressToCheckOut} />
+                <AddressCart _onPress={this._onPressToCheckOut} />
+
+                <TouchableOpacity style={{ alignSelf: "flex-end" }}>
+                  <Text style={{ color: "#28AE5E" }}>
+                    Tambah Lokasi Baru {`(+)`}
+                  </Text>
+                </TouchableOpacity>
+              </Body>
+            </CardItem>
+          </Card>
+        </Content>
+      );
+    }
+  };
+
+  renderMyCartButton = () => {
+    if (this.state.isMyCartShow) {
+      return (
+        <Button onPress={this._toggleMyCart} style={styles.btnCheckout}>
+          <Text>Masukan Alamat </Text>
+          <RightArrow width="20" height="20" color="white" />
+        </Button>
+      );
+    } else {
+      return (
+        <Button onPress={this._toggleMyCart} style={styles.btnKeranjang}>
+          <ArrowLeft2 width="20" height="20" color="white" />
+          <Text> Keranjang </Text>
+        </Button>
+      );
+    }
+  };
+
+  _toggleMyCart = () => {
+    this.setState({
+      isMyCartShow: !this.state.isMyCartShow
+    });
+  };
+
+  render() {
+    return (
+      <Container>
+        <Header {...this.props} />
+
+        {this.renderMyCart()}
+
         <View style={styles.contentCheckout}>
           <View>
             <Text style={styles.txtTotal}>Total</Text>
@@ -102,12 +200,7 @@ class MyCart extends Component {
               {stringToRupiah(this.state.total.toString())}
             </Text>
           </View>
-          <View>
-            <Button onPress={this._onPress} style={styles.btnCheckout}>
-              <Text>Checkout </Text>
-              <RightArrow width="20" height="20" color="white" />
-            </Button>
-          </View>
+          <View>{this.renderMyCartButton()}</View>
         </View>
       </Container>
     );
@@ -135,7 +228,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 10,
-    width: "100%"
+    width: "100%",
+    borderColor: "#C9C9C9",
+    borderTopWidth: 1
   },
   break: {
     marginBottom: 70
@@ -144,6 +239,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#28AE5E",
     paddingRight: 10
   },
+  btnKeranjang: {
+    backgroundColor: "#28AE5E",
+    paddingLeft: 10
+  },
   txtPrice: {
     fontWeight: "bold",
     fontSize: 20,
@@ -151,5 +250,10 @@ const styles = StyleSheet.create({
   },
   txtTotal: {
     fontWeight: "bold"
+  },
+  addressContainer: {
+    flex: 1,
+    flexDirection: "row",
+    padding: 10
   }
 });
