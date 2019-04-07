@@ -9,6 +9,7 @@ import LoginScreen from "../screen/Login";
 import RegisterScreen from "../screen/Register";
 import SideBar from "../components/Sidebar";
 import SettingScreen from "../screen/Settings";
+import AddAddress from "../screen/AddAddress";
 
 export const drawerNav = createDrawerNavigator(
   {
@@ -69,6 +70,9 @@ export const rootStack = createStackNavigator(
     },
     Checkout: {
       screen: CheckoutScreen
+    },
+    AddAddress: {
+      screen: AddAddress
     }
   },
   {

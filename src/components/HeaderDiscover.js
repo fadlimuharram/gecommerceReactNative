@@ -7,17 +7,17 @@ import {
   StatusBar,
   TouchableOpacity
 } from "react-native";
-import { ArrowLeft, ChatLogo, NotificationLogo } from "../assets/svg/Love";
+import { ChatLogo, NotificationLogo } from "../assets/svg/Love";
 import { Item, Input } from "native-base";
 class HeaderDiscover extends Component {
   render() {
-    const { _onGoBackButton } = this.props;
+    const { onLeftLogoPress, renderLeftLogo } = this.props;
     return (
       <View>
         {/* <StatusBar barStyle="light-content" backgroundColor=""/> */}
         <View style={styles.content}>
-          <TouchableOpacity style={styles.left} onPress={_onGoBackButton}>
-            <ArrowLeft height="16" width="16" color="black" />
+          <TouchableOpacity style={styles.left} onPress={onLeftLogoPress}>
+            {renderLeftLogo()}
           </TouchableOpacity>
           <View style={styles.right}>
             <Item style={styles.searchContainer}>

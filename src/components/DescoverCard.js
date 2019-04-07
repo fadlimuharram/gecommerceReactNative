@@ -4,7 +4,8 @@ import {
   View,
   ImageBackground,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions
 } from "react-native";
 import {
   Container,
@@ -23,15 +24,7 @@ import {
 import { Love } from "../assets/svg/Love";
 import { stringToRupiah } from "../_helpers";
 
-const DiscoverCard = ({
-  id,
-  uri,
-  price,
-  category,
-  _onPress,
-  _onPressCart,
-  isOnCart
-}) => (
+const DiscoverCard = ({ id, uri, price, name, _onPress, _onPressCart }) => (
   <Card style={styles.card}>
     <TouchableOpacity onPress={() => _onPress(id)}>
       <CardItem cardBody>
@@ -48,22 +41,11 @@ const DiscoverCard = ({
       </CardItem>
     </TouchableOpacity>
     <CardItem>
-      <Left style={styles.leftTxt}>
+      <Body style={styles.leftTxt}>
         <View>
+          <Text style={styles.txtDesc}>{name}</Text>
           <Text style={styles.txtPrice}>{stringToRupiah(price)}</Text>
-          <Text style={styles.txtDesc}>{category}</Text>
         </View>
-      </Left>
-      <Body>
-        {isOnCart ? (
-          <Button disabled rounded onPress={_onPressCart}>
-            <Text>Ada di Keranjang</Text>
-          </Button>
-        ) : (
-          <Button rounded onPress={_onPressCart} style={styles.btnBuy}>
-            <Text>Tambah Keranjang</Text>
-          </Button>
-        )}
       </Body>
     </CardItem>
   </Card>
@@ -73,7 +55,8 @@ export default DiscoverCard;
 
 const styles = StyleSheet.create({
   card: {
-    marginTop: 15
+    marginTop: 15,
+    width: Dimensions.get("window").width / 2
   },
   btnWishlist: {
     width: 50,

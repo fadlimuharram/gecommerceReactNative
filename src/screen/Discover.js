@@ -2,10 +2,13 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Image, View, ImageBackground, StyleSheet } from "react-native";
 import { Container, Content, Text } from "native-base";
-import DiscoverCard from "../components/DescoverCard";
+// import DiscoverCard from "../components/DescoverCard";
+import HomeCardRecommendation from "../components/HomeCardRecommendation";
 import { productGetByCategoryId, postCart } from "../_actions";
 import { FlatList } from "react-native-gesture-handler";
 import HeaderDiscover from "../components/HeaderDiscover";
+import { withHeaderSearch } from "./withHeaderHOC";
+import { compose } from "redux";
 
 class Discover extends Component {
   state = {
@@ -21,9 +24,13 @@ class Discover extends Component {
       productId: id
     });
   };
-  _onPressCart = item => {
-    this.props.postCart(item);
-    this.props.navigation.navigate("MyCart");
+  // _onPressCart = item => {
+  //   this.props.postCart(item);
+  //   this.props.navigation.navigate("MyCart");
+  // };
+
+  _onPressWishList = item => {
+    alert(item + " wishlist ");
   };
 
   componentDidMount() {
@@ -45,14 +52,14 @@ class Discover extends Component {
     isSelected = isSelected ? true : false;
 
     return (
-      <DiscoverCard
+      <HomeCardRecommendation
         id={item.id}
         uri={item.uri}
+        title={item.name}
         price={item.price}
         category={item.category.name}
-        _onPress={this._onPress}
-        _onPressCart={() => this._onPressCart(item)}
-        isOnCart={isSelected}
+        bgColor="rgba(137, 155, 107, 1.0)"
+        onPress={() => this._onPressWishList(item.id)}
       />
     );
   };
@@ -62,24 +69,19 @@ class Discover extends Component {
     if (products) {
       return (
         <FlatList
+          contentContainerStyle={{ margin: 4 }}
+          horizontal={false}
           data={products}
           renderItem={this._renderCardItem}
           keyExtractor={this._keyExtractor}
+          numColumns={2}
         />
       );
     }
   };
 
   render() {
-    return (
-      <Container>
-        <HeaderDiscover
-          _onGoBackButton={this._onGoBackButton}
-          {...this.props}
-        />
-        <Content style={styles.content}>{this._renderCard()}</Content>
-      </Container>
-    );
+    return <Content style={styles.content}>{this._renderCard()}</Content>;
   }
 }
 
@@ -90,17 +92,19 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  {
-    productGetByCategoryId,
-    postCart
-  }
-)(Discover);
+const enhance = compose(
+  withHeaderSearch,
+  connect(
+    mapStateToProps,
+    {
+      productGetByCategoryId,
+      postCart
+    }
+  )
+);
+
+export default enhance(Discover);
 
 const styles = StyleSheet.create({
-  content: {
-    paddingLeft: 10,
-    paddingRight: 10
-  }
+  content: {}
 });

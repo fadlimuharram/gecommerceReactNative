@@ -23,7 +23,8 @@ const MyCartCard = ({
   price,
   quantity,
   _onAddQuantity,
-  _onDecQuantity
+  _onDecQuantity,
+  _onDeleteCart
 }) => (
   <Card>
     <CardItem style={styles.card}>
@@ -42,7 +43,12 @@ const MyCartCard = ({
             <Text style={styles.txtCategory}>{category}</Text>
           </View>
 
-          <Button small transparent style={styles.btnDelete}>
+          <Button
+            small
+            transparent
+            onPress={_onDeleteCart}
+            style={styles.btnDelete}
+          >
             <DeleteBtnX width="10" height="10" color="black" />
           </Button>
 

@@ -40,8 +40,7 @@ export default (state = INITIAL_STATE, action) => {
       let dt = state.data.filter((val, index) => {
         return val.id !== action.payload;
       });
-      let ttl = generateTotal(dt);
-      return { ...state, data: newData, total: ttl };
+      return { ...state, data: dt };
 
     case CART_UPDATE:
       return { ...state, data: action.payload };

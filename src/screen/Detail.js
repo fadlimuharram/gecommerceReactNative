@@ -26,6 +26,7 @@ class Detail extends Component {
     const { navigation, productFindById } = this.props;
     // alert(navigation.getParam("productId", "0"));
     productFindById(navigation.getParam("productId", "0"));
+    // alert(navigation.getParam("productId", "0"));
   }
 
   _onPressCart = () => {
@@ -35,146 +36,150 @@ class Detail extends Component {
 
   render() {
     const { detail } = this.props;
-    return (
-      <Container>
-        <Content>
-          <Card>
-            <CardItem cardBody>
-              <Swiper
-                style={styles.wrapper}
-                autoplay={true}
-                autoplayDirection={true}
-                autoplayTimeout={2.5}
-                showsButtons={false}
-                activeDotStyle={{
-                  backgroundColor: "#28AE5E",
-                  width: 15,
-                  height: 15,
-                  borderColor: "white",
-                  borderWidth: 2
-                }}
-                dotStyle={{
-                  backgroundColor: "grey",
-                  width: 10,
-                  height: 10
-                }}
-              >
-                <Image
-                  source={{
-                    uri: detail[0].uri
+    if (detail.length > 0) {
+      return (
+        <Container>
+          <Content>
+            <Card>
+              <CardItem cardBody>
+                <Swiper
+                  style={styles.wrapper}
+                  autoplay={true}
+                  autoplayDirection={true}
+                  autoplayTimeout={2.5}
+                  showsButtons={false}
+                  activeDotStyle={{
+                    backgroundColor: "#28AE5E",
+                    width: 15,
+                    height: 15,
+                    borderColor: "white",
+                    borderWidth: 2
                   }}
-                  style={styles.imgContent}
-                />
-                <Image
-                  source={{
-                    uri:
-                      "https://3.bp.blogspot.com/-z9oDeUbAZl8/VrruNaRX5UI/AAAAAAAAAU8/7-guomCnv-E/s1600/Cara%2BBudidaya%2BAnggrek%2BDendrobium.jpg"
+                  dotStyle={{
+                    backgroundColor: "grey",
+                    width: 10,
+                    height: 10
                   }}
-                  style={styles.imgContent}
-                />
-                <Image
-                  source={{
-                    uri:
-                      "https://bungaku.co.id/wp-content/uploads/2018/08/Tanaman-Anggrek-Dendrobium-1-520x574.jpg"
-                  }}
-                  style={styles.imgContent}
-                />
-              </Swiper>
-            </CardItem>
-            <CardItem>
-              <View style={styles.content}>
-                <View style={styles.headerContent}>
-                  <View style={styles.headerContentLeft}>
-                    <Text style={styles.txtTitle}>{detail[0].name} </Text>
-                    <Text style={styles.txtPrice}>
-                      {stringToRupiah(detail[0].price)}
-                    </Text>
-                    <Text style={styles.txtCategorie}>
-                      {detail[0].category.name}
-                    </Text>
-                  </View>
-                  <View style={styles.headerContentRight}>
-                    <CustomerStart width="50" height="50" />
-                    <View style={styles.headerContentRightText}>
-                      <Text style={styles.txtAverage}> 4.7 </Text>
-                      <Text style={styles.txtTotalVote}> {`(2983)`} </Text>
+                >
+                  <Image
+                    source={{
+                      uri: detail[0].uri
+                    }}
+                    style={styles.imgContent}
+                  />
+                  <Image
+                    source={{
+                      uri:
+                        "https://3.bp.blogspot.com/-z9oDeUbAZl8/VrruNaRX5UI/AAAAAAAAAU8/7-guomCnv-E/s1600/Cara%2BBudidaya%2BAnggrek%2BDendrobium.jpg"
+                    }}
+                    style={styles.imgContent}
+                  />
+                  <Image
+                    source={{
+                      uri:
+                        "https://bungaku.co.id/wp-content/uploads/2018/08/Tanaman-Anggrek-Dendrobium-1-520x574.jpg"
+                    }}
+                    style={styles.imgContent}
+                  />
+                </Swiper>
+              </CardItem>
+              <CardItem>
+                <View style={styles.content}>
+                  <View style={styles.headerContent}>
+                    <View style={styles.headerContentLeft}>
+                      <Text style={styles.txtTitle}>{detail[0].name} </Text>
+                      <Text style={styles.txtPrice}>
+                        {stringToRupiah(detail[0].price)}
+                      </Text>
+                      <Text style={styles.txtCategorie}>
+                        {detail[0].category.name}
+                      </Text>
+                    </View>
+                    <View style={styles.headerContentRight}>
+                      <CustomerStart width="50" height="50" />
+                      <View style={styles.headerContentRightText}>
+                        <Text style={styles.txtAverage}> 4.7 </Text>
+                        <Text style={styles.txtTotalVote}> {`(2983)`} </Text>
+                      </View>
                     </View>
                   </View>
-                </View>
 
-                <Text style={styles.txtContent}>{detail[0].desc}</Text>
-                <View style={styles.contentBordered}>
-                  <ScrollView horizontal={true} style={styles.tagContent}>
-                    <Button
-                      style={styles.btnStyle}
-                      color="28AE5E"
-                      bordered
-                      rounded
-                    >
-                      <Text style={styles.btnTxt}>Tag Satu</Text>
-                    </Button>
-                    <Button style={styles.btnStyle} bordered rounded>
-                      <Text style={styles.btnTxt}>Tag Dua</Text>
-                    </Button>
-                    <Button style={styles.btnStyle} bordered rounded>
-                      <Text style={styles.btnTxt}>Tag Tiga</Text>
-                    </Button>
-                  </ScrollView>
-                </View>
+                  <Text style={styles.txtContent}>{detail[0].desc}</Text>
+                  <View style={styles.contentBordered}>
+                    <ScrollView horizontal={true} style={styles.tagContent}>
+                      <Button
+                        style={styles.btnStyle}
+                        color="28AE5E"
+                        bordered
+                        rounded
+                      >
+                        <Text style={styles.btnTxt}>Tag Satu</Text>
+                      </Button>
+                      <Button style={styles.btnStyle} bordered rounded>
+                        <Text style={styles.btnTxt}>Tag Dua</Text>
+                      </Button>
+                      <Button style={styles.btnStyle} bordered rounded>
+                        <Text style={styles.btnTxt}>Tag Tiga</Text>
+                      </Button>
+                    </ScrollView>
+                  </View>
 
-                <View style={styles.discussionContainer}>
-                  <Text style={styles.txtDis}>Diskusi Terakhir</Text>
-                  <View style={styles.disParent}>
-                    <Image
-                      source={{
-                        uri:
-                          "https://cdn2.iconfinder.com/data/icons/people-80/96/Picture1-512.png"
-                      }}
-                      style={styles.disParentImg}
-                    />
-                    <View>
-                      <Text style={styles.disParentTxtTitle}>Bagus Aria</Text>
-                      <Text style={styles.disParentTxtDate}>
-                        17 Maret pukul 19:17
-                      </Text>
-                      <Text style={styles.disParentTxtContent}>
-                        masih ada kak ?
+                  <View style={styles.discussionContainer}>
+                    <Text style={styles.txtDis}>Diskusi Terakhir</Text>
+                    <View style={styles.disParent}>
+                      <Image
+                        source={{
+                          uri:
+                            "https://cdn2.iconfinder.com/data/icons/people-80/96/Picture1-512.png"
+                        }}
+                        style={styles.disParentImg}
+                      />
+                      <View>
+                        <Text style={styles.disParentTxtTitle}>Bagus Aria</Text>
+                        <Text style={styles.disParentTxtDate}>
+                          17 Maret pukul 19:17
+                        </Text>
+                        <Text style={styles.disParentTxtContent}>
+                          masih ada kak ?
+                        </Text>
+                      </View>
+                    </View>
+                    <View style={styles.disChild}>
+                      <Image
+                        source={{
+                          uri:
+                            "https://cdn2.iconfinder.com/data/icons/people-80/96/Picture1-512.png"
+                        }}
+                        style={styles.disChildImg}
+                      />
+                      <View>
+                        <Text style={styles.disChildTextTitle}>Admin</Text>
+                        <Text style={styles.disChildTxtDate}>
+                          17 Maret pukul 21:22
+                        </Text>
+                        <Text style={styles.disChildTxtContent}>
+                          masih ada mas
+                        </Text>
+                      </View>
+                    </View>
+                    <View style={styles.disReadMore}>
+                      <Text style={styles.disReadMoreTxt}>
+                        Lihat Semua Diskusi
                       </Text>
                     </View>
-                  </View>
-                  <View style={styles.disChild}>
-                    <Image
-                      source={{
-                        uri:
-                          "https://cdn2.iconfinder.com/data/icons/people-80/96/Picture1-512.png"
-                      }}
-                      style={styles.disChildImg}
-                    />
-                    <View>
-                      <Text style={styles.disChildTextTitle}>Admin</Text>
-                      <Text style={styles.disChildTxtDate}>
-                        17 Maret pukul 21:22
-                      </Text>
-                      <Text style={styles.disChildTxtContent}>
-                        masih ada mas
-                      </Text>
-                    </View>
-                  </View>
-                  <View style={styles.disReadMore}>
-                    <Text style={styles.disReadMoreTxt}>
-                      Lihat Semua Diskusi
-                    </Text>
                   </View>
                 </View>
-              </View>
-            </CardItem>
-          </Card>
-        </Content>
-        <Button style={styles.btnCart} onPress={this._onPressCart} full>
-          <Text style={styles.btnCartTxt}>Tambah Keranjang</Text>
-        </Button>
-      </Container>
-    );
+              </CardItem>
+            </Card>
+          </Content>
+          <Button style={styles.btnCart} onPress={this._onPressCart} full>
+            <Text style={styles.btnCartTxt}>Tambah Keranjang</Text>
+          </Button>
+        </Container>
+      );
+    } else {
+      return <Text>Kosong</Text>;
+    }
   }
 }
 

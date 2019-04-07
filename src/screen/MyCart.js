@@ -12,7 +12,7 @@ import {
 import MyCartCard from "../components/MyCartCard";
 import { RightArrow, ArrowLeft2, MapsLogo } from "../assets/svg/Love";
 import { connect } from "react-redux";
-import { updatCart } from "../_actions";
+import { updatCart, deleteCart } from "../_actions";
 import { stringToRupiah } from "../_helpers";
 import Header from "../components/Header";
 import AddressCart from "../components/AddressCard";
@@ -29,6 +29,10 @@ class MyCart extends Component {
     this.props.navigation.navigate("Checkout", {
       totalCart: stringToRupiah(this.state.total.toString())
     });
+  };
+
+  _onPressToAddAddress = () => {
+    this.props.navigation.navigate("AddAddress");
   };
 
   refreshData = () => {
@@ -78,7 +82,6 @@ class MyCart extends Component {
     this.setState({
       data: newStateData
     });
-    this.countTotal();
     this.props.updatCart(newStateData);
     this.refreshData();
   };
@@ -104,8 +107,12 @@ class MyCart extends Component {
     this.setState({
       data: newStateData
     });
-    this.countTotal();
     this.props.updatCart(newStateData);
+    this.refreshData();
+  };
+
+  _deleteCart = id => {
+    this.props.deleteCart(id);
     this.refreshData();
   };
 
@@ -119,6 +126,7 @@ class MyCart extends Component {
         quantity={item.quantity}
         _onAddQuantity={() => this._onAddQuantity(item.id)}
         _onDecQuantity={() => this._onDecQuantity(item.id)}
+        _onDeleteCart={() => this._deleteCart(item.id)}
       />
     );
   };
@@ -149,7 +157,10 @@ class MyCart extends Component {
                 <AddressCart _onPress={this._onPressToCheckOut} />
                 <AddressCart _onPress={this._onPressToCheckOut} />
 
-                <TouchableOpacity style={{ alignSelf: "flex-end" }}>
+                <TouchableOpacity
+                  onPress={this._onPressToAddAddress}
+                  style={{ alignSelf: "flex-end" }}
+                >
                   <Text style={{ color: "#28AE5E" }}>
                     Tambah Lokasi Baru {`(+)`}
                   </Text>
@@ -216,7 +227,7 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { updatCart }
+  { updatCart, deleteCart }
 )(MyCart);
 
 const styles = StyleSheet.create({

@@ -30,7 +30,7 @@ class AuthLoadingScreen extends Component {
   // _bootstrapAsyc = async () => {
   //   setTimeout(() => {
   //     this.props.navigation.navigate("Auth");
-  //   }, 5000);
+  //   }, 2000);
   // };
   componentDidMount() {
     this.props.navigation.navigate("Auth");

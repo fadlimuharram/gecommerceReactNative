@@ -61,6 +61,21 @@ const INITIAL_STATE = {
         uri:
           "http://wallsdesk.com/wp-content/uploads/2018/04/Apple-tree-Wallpaper.jpg"
       }
+    },
+    {
+      id: 5,
+      name: "Kamboja Jepang Sedang",
+      price: "50000",
+      desc: "ini deskripsi untuk kamboja besar",
+      uri:
+        "https://3.bp.blogspot.com/-JKFQyKE5rXo/WSuvU4un9XI/AAAAAAAAAUs/M0hq1HEMQtAMwaz4BK9DUak3Kwck3Al3ACLcB/s1600/Ciri-Ciri%2BTanaman%2BBonsai%2BAdenium.jpg",
+      category_id: 2,
+      category: {
+        id: 2,
+        name: "Tanaman Hias",
+        uri:
+          "https://www.wallpaperup.com/uploads/wallpapers/2012/07/14/6033/2d412d59ffa38ed0f6d0fff9462dbcb4-700.jpg"
+      }
     }
   ],
   tempData: []
