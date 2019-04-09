@@ -16,7 +16,7 @@ import HomeCardRecommendation from "../components/HomeCardRecommendation";
 import Header from "../components/Header";
 import Swiper from "react-native-swiper";
 import { withHeaderSideBar } from "./withHeaderHOC";
-import { getCategories } from "../_actions";
+import { getCategories, getProducts } from "../_actions";
 import { apiConstants } from "../_constants";
 class Home extends Component {
   onPressCategory = categoryId => {
@@ -48,10 +48,10 @@ class Home extends Component {
   renderItemRecommendation = ({ item }) => (
     <HomeCardRecommendation
       id={item.id}
-      uri={item.uri}
+      uri={apiConstants.picUri + item.pictures[0].cover}
       title={item.name}
-      price={item.price}
-      category={item.category.name}
+      price={String(item.price)}
+      // category={"kosong"}
       bgColor="rgba(137, 155, 107, 1.0)"
       onPress={() => this.onPressDetail(item.id)}
     />
@@ -59,6 +59,7 @@ class Home extends Component {
 
   componentDidMount() {
     this.props.getCategories(10, 1);
+    this.props.getProducts(10, 1);
   }
 
   render() {
@@ -70,7 +71,9 @@ class Home extends Component {
     //   return <Text>kosong</Text>;
     // }
 
-    if (this.props.categories.length > 0) {
+    const { categories, products } = this.props;
+
+    if (categories.length > 0 && products) {
       return (
         <Content style={styles.content}>
           <Card>
@@ -169,7 +172,7 @@ const enhance = compose(
   withHeaderSideBar,
   connect(
     mapStateToProps,
-    { getCategories }
+    { getCategories, getProducts }
   )
 );
 

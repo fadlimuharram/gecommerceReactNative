@@ -15,7 +15,7 @@ import {
   Right
 } from "native-base";
 import { connect } from "react-redux";
-import { productFindById, postCart } from "../_actions";
+import { getProductsById, postCart } from "../_actions";
 import { CustomerStart } from "../assets/svg/Love";
 import Swiper from "react-native-swiper";
 import { Love } from "../assets/svg/Love";
@@ -23,10 +23,11 @@ import { stringToRupiah } from "../_helpers";
 
 class Detail extends Component {
   componentDidMount() {
-    const { navigation, productFindById } = this.props;
+    const { navigation, getProductsById } = this.props;
     // alert(navigation.getParam("productId", "0"));
-    productFindById(navigation.getParam("productId", "0"));
+    // productFindById(navigation.getParam("productId", "0"));
     // alert(navigation.getParam("productId", "0"));
+    getProductsById(navigation.getParam("productId", "0"));
   }
 
   _onPressCart = () => {
@@ -37,6 +38,7 @@ class Detail extends Component {
   render() {
     const { detail } = this.props;
     if (detail.length > 0) {
+      alert(detail[0].id);
       return (
         <Container>
           <Content>
@@ -63,7 +65,7 @@ class Detail extends Component {
                 >
                   <Image
                     source={{
-                      uri: detail[0].uri
+                      uri: detail[0].pictures[0].cover
                     }}
                     style={styles.imgContent}
                   />
@@ -89,10 +91,10 @@ class Detail extends Component {
                     <View style={styles.headerContentLeft}>
                       <Text style={styles.txtTitle}>{detail[0].name} </Text>
                       <Text style={styles.txtPrice}>
-                        {stringToRupiah(detail[0].price)}
+                        {stringToRupiah(detail.price)}
                       </Text>
                       <Text style={styles.txtCategorie}>
-                        {detail[0].category.name}
+                        {/* {detail[0].category.name} */}
                       </Text>
                     </View>
                     <View style={styles.headerContentRight}>
@@ -104,7 +106,7 @@ class Detail extends Component {
                     </View>
                   </View>
 
-                  <Text style={styles.txtContent}>{detail[0].desc}</Text>
+                  <Text style={styles.txtContent}>{detail.desc}</Text>
                   <View style={styles.contentBordered}>
                     <ScrollView horizontal={true} style={styles.tagContent}>
                       <Button
@@ -185,14 +187,14 @@ class Detail extends Component {
 
 const mapStateToProps = state => {
   return {
-    detail: state.products.tempData
+    detail: state.products.detail
   };
 };
 
 export default connect(
   mapStateToProps,
   {
-    productFindById,
+    getProductsById,
     postCart
   }
 )(Detail);
