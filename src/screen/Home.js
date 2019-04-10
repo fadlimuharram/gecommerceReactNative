@@ -17,7 +17,8 @@ import Header from "../components/Header";
 import Swiper from "react-native-swiper";
 import { withHeaderSideBar } from "./withHeaderHOC";
 import { getCategories, getProducts } from "../_actions";
-import { apiConstants } from "../_constants";
+import Config from "react-native-config";
+
 class Home extends Component {
   onPressCategory = categoryId => {
     this.props.navigation.navigate("Discover", {
@@ -37,7 +38,7 @@ class Home extends Component {
     return (
       <HomeCardCategory
         id={item.id}
-        uri={apiConstants.picUri + item.cover}
+        uri={Config.PIC_URI + item.cover}
         title={item.name}
         bgColor="rgba(137, 155, 107, 1.0)"
         onPress={() => this.onPressCategory(item.id)}
@@ -48,7 +49,7 @@ class Home extends Component {
   renderItemRecommendation = ({ item }) => (
     <HomeCardRecommendation
       id={item.id}
-      uri={apiConstants.picUri + item.pictures[0].cover}
+      uri={Config.PIC_URI + item.pictures[0].cover}
       title={item.name}
       price={String(item.price)}
       // category={"kosong"}
@@ -60,6 +61,7 @@ class Home extends Component {
   componentDidMount() {
     this.props.getCategories(10, 1);
     this.props.getProducts(10, 1);
+    alert(this.props.navigation.getParam("kiriman", "0"));
   }
 
   render() {

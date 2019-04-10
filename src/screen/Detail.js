@@ -20,6 +20,7 @@ import { CustomerStart } from "../assets/svg/Love";
 import Swiper from "react-native-swiper";
 import { Love } from "../assets/svg/Love";
 import { stringToRupiah } from "../_helpers";
+import Config from "react-native-config";
 
 class Detail extends Component {
   componentDidMount() {
@@ -31,14 +32,30 @@ class Detail extends Component {
   }
 
   _onPressCart = () => {
-    this.props.postCart(this.props.detail[0]);
-    this.props.navigation.navigate("MyCart");
+    // this.props.postCart(this.props.detail[0]);
+    // this.props.navigation.navigate("MyCart");
+
+    if (this.props.isLoggedIn) {
+      alert("anda sudah login");
+    } else {
+      this.props.navigation.navigate("Auth");
+    }
+  };
+
+  renderSwiperImage = pictures => {
+    return pictures.map((val, i) => (
+      <Image
+        source={{
+          uri: Config.PIC_URI + val.cover
+        }}
+        style={styles.imgContent}
+      />
+    ));
   };
 
   render() {
     const { detail } = this.props;
     if (detail.length > 0) {
-      alert(detail[0].id);
       return (
         <Container>
           <Content>
@@ -63,26 +80,7 @@ class Detail extends Component {
                     height: 10
                   }}
                 >
-                  <Image
-                    source={{
-                      uri: detail[0].pictures[0].cover
-                    }}
-                    style={styles.imgContent}
-                  />
-                  <Image
-                    source={{
-                      uri:
-                        "https://3.bp.blogspot.com/-z9oDeUbAZl8/VrruNaRX5UI/AAAAAAAAAU8/7-guomCnv-E/s1600/Cara%2BBudidaya%2BAnggrek%2BDendrobium.jpg"
-                    }}
-                    style={styles.imgContent}
-                  />
-                  <Image
-                    source={{
-                      uri:
-                        "https://bungaku.co.id/wp-content/uploads/2018/08/Tanaman-Anggrek-Dendrobium-1-520x574.jpg"
-                    }}
-                    style={styles.imgContent}
-                  />
+                  {this.renderSwiperImage(detail[0].pictures)}
                 </Swiper>
               </CardItem>
               <CardItem>
@@ -91,7 +89,7 @@ class Detail extends Component {
                     <View style={styles.headerContentLeft}>
                       <Text style={styles.txtTitle}>{detail[0].name} </Text>
                       <Text style={styles.txtPrice}>
-                        {stringToRupiah(detail.price)}
+                        {stringToRupiah(String(detail[0].price))}
                       </Text>
                       <Text style={styles.txtCategorie}>
                         {/* {detail[0].category.name} */}
@@ -106,7 +104,7 @@ class Detail extends Component {
                     </View>
                   </View>
 
-                  <Text style={styles.txtContent}>{detail.desc}</Text>
+                  <Text style={styles.txtContent}>{detail[0].description}</Text>
                   <View style={styles.contentBordered}>
                     <ScrollView horizontal={true} style={styles.tagContent}>
                       <Button
@@ -187,7 +185,8 @@ class Detail extends Component {
 
 const mapStateToProps = state => {
   return {
-    detail: state.products.detail
+    detail: state.products.detail,
+    isLoggedIn: state.user.isLoggedIn
   };
 };
 

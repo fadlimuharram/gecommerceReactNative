@@ -11,25 +11,24 @@ import {
 } from "react-native";
 import { LogoIcon, LockIcon } from "../assets/svg/Love";
 import LinearGradient from "react-native-linear-gradient";
-
+import { connect } from "react-redux";
+import { login } from "../_actions";
 class Login extends Component {
   static navigationOptions = {
     header: null
   };
 
-  componentDidMount() {
-    fetch("http://10.0.2.2:3333")
-      .then(data => data.json())
-      .then(dt => {
-        console.log(dt.greeting);
-      })
-      .catch(e => console.log(e));
-  }
+  state = {
+    email: "fadlimuharram@hotmail.com",
+    password: "fadli123456"
+  };
 
   _toRegister = () => {
     this.props.navigation.navigate("Register");
   };
   _toHome = () => {
+    const { email, password } = this.state;
+    this.props.login(email, password);
     this.props.navigation.navigate("Home");
   };
   render() {
@@ -47,15 +46,19 @@ class Login extends Component {
                 <Form>
                   <Item style={styles.itemInput}>
                     <Input
-                      placeholder="Username"
+                      placeholder="Email"
                       placeholderTextColor="white"
                       selectionColor="white"
+                      value={this.state.email}
+                      onChangeText={email => this.setState({ email })}
                     />
                   </Item>
                   <Item style={styles.itemInput} floatingLabel last>
                     <Input
                       placeholder="Password"
                       placeholderTextColor="white"
+                      value={this.state.password}
+                      onChangeText={password => this.setState({ password })}
                     />
                   </Item>
                   <Button style={styles.btnLogin} onPress={this._toHome} full>
@@ -76,7 +79,10 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default connect(
+  "",
+  { login }
+)(Login);
 
 const styles = StyleSheet.create({
   content: {

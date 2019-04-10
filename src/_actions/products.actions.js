@@ -1,7 +1,8 @@
-import { productConstants, apiConstants } from "../_constants";
+import { productConstants } from "../_constants";
 import axios from "axios";
 const { PRODUCTS_GET, PRODUCTS_GET_ID } = productConstants;
-const { uri } = apiConstants;
+
+import Config from "react-native-config";
 
 // export const productGetByCategoryId = categoryId => dispatch => {
 //   dispatch({
@@ -19,7 +20,7 @@ const { uri } = apiConstants;
 
 export const getProducts = (limit, page) => async dispatch => {
   try {
-    const fullUri = `${uri}products?limit=${limit}&page=${page}`;
+    const fullUri = `${Config.API_URL}products?limit=${limit}&page=${page}`;
     const products = await axios.get(fullUri);
 
     dispatch({ type: PRODUCTS_GET, payload: products.data });
@@ -30,7 +31,7 @@ export const getProducts = (limit, page) => async dispatch => {
 
 export const getProductsById = id => async dispatch => {
   try {
-    const fullUri = `${uri}products/${id}`;
+    const fullUri = `${Config.API_URL}products/${id}`;
     const product = await axios.get(fullUri);
 
     dispatch({ type: PRODUCTS_GET_ID, payload: product.data });
