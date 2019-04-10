@@ -58,7 +58,7 @@ const MyCartCard = ({
             <Button transparent onPress={_onDecQuantity} style={styles.btnCart}>
               <MinusLogo width="10" height="10" color="black" />
             </Button>
-            <Text style={styles.txtItemCount}>{quantity}</Text>
+            <TextInput style={styles.txtItemCount} value={String(quantity)} />
 
             <Button transparent onPress={_onAddQuantity} style={styles.btnCart}>
               <PlusLogo width="10" height="10" color="black" />

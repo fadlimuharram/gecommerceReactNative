@@ -12,121 +12,74 @@ import {
 import MyCartCard from "../components/MyCartCard";
 import { RightArrow, ArrowLeft2, MapsLogo } from "../assets/svg/Love";
 import { connect } from "react-redux";
-import { updatCart, deleteCart } from "../_actions";
+import { getCart, updatCart, deleteCart } from "../_actions";
 import { stringToRupiah } from "../_helpers";
 import Header from "../components/Header";
 import AddressCart from "../components/AddressCard";
 import { ScrollView } from "react-native-gesture-handler";
-
+import Config from "react-native-config";
 class MyCart extends Component {
   state = {
-    data: [],
-    total: 0,
     isMyCartShow: true
   };
 
   _onPressToCheckOut = () => {
-    this.props.navigation.navigate("Checkout", {
-      totalCart: stringToRupiah(this.state.total.toString())
-    });
+    // this.props.navigation.navigate("Checkout", {
+    //   totalCart: stringToRupiah(this.state.total.toString())
+    // });
   };
 
   _onPressToAddAddress = () => {
     this.props.navigation.navigate("AddAddress");
   };
 
-  refreshData = () => {
-    const { dataCart } = this.props;
-    this.setState({
-      data: dataCart
-    });
-    this.countTotal();
-  };
-
   componentDidMount() {
-    this.refreshData();
-
-    this.props.navigation.addListener("didFocus", route => {
-      this.refreshData();
-    });
+    const { isLoggedIn, access_token } = this.props;
+    if (!isLoggedIn) {
+      this.props.navigation.navigate("Auth");
+    } else {
+      this.props.navigation.addListener("didFocus", () => {
+        this.props.getCart(access_token);
+      });
+    }
   }
 
-  countTotal = () => {
-    let total = 0;
+  onAddQuantity = (id, oldQuantity) => {
+    const quantity = oldQuantity + 1;
+    this.props.updatCart(id, quantity, this.props.access_token);
+  };
+
+  onDecQuantity = (id, oldQuantity) => {
+    if (oldQuantity - 1 > 0) {
+      const quantity = oldQuantity - 1;
+      this.props.updatCart(id, quantity, this.props.access_token);
+    }
+  };
+
+  deleteCart = id => {
+    this.props.deleteCart(id, this.props.access_token);
+  };
+
+  generateTotal = () => {
+    // alert(this.props.dataCart[0].product.name);
+    let ttl = 0;
     this.props.dataCart.forEach((val, i) => {
-      total += val.quantity * val.price;
+      ttl += val.quantity * val.product.price;
     });
-    this.setState({
-      total: total
-    });
-  };
-
-  _onAddQuantity = id => {
-    const newStateData = [];
-    this.state.data.forEach((val, i) => {
-      if (val.id === id) {
-        newStateData.push({
-          id: val.id,
-          name: val.name,
-          price: val.price,
-          desc: val.desc,
-          uri: val.uri,
-          category_id: val.category_id,
-          category: val.category, //dummy
-          quantity: val.quantity + 1
-        });
-      } else {
-        newStateData.push(val);
-      }
-    });
-    this.setState({
-      data: newStateData
-    });
-    this.props.updatCart(newStateData);
-    this.refreshData();
-  };
-
-  _onDecQuantity = id => {
-    const newStateData = [];
-    this.state.data.forEach((val, i) => {
-      if (val.id === id) {
-        newStateData.push({
-          id: val.id,
-          name: val.name,
-          price: val.price,
-          desc: val.desc,
-          uri: val.uri,
-          category_id: val.category_id,
-          category: val.category, //dummy
-          quantity: val.quantity - 1
-        });
-      } else {
-        newStateData.push(val);
-      }
-    });
-    this.setState({
-      data: newStateData
-    });
-    this.props.updatCart(newStateData);
-    this.refreshData();
-  };
-
-  _deleteCart = id => {
-    this.props.deleteCart(id);
-    this.refreshData();
+    return String(ttl);
   };
 
   _renderItem = ({ item }) => {
     return (
       <MyCartCard
-        uri={item.uri}
-        title={item.name}
-        category={item.category.name}
-        price={item.price}
+        uri={Config.PIC_URI + item.product.pictures[0].cover}
+        title={item.product.name}
+        category={item.product.category.name}
+        price={item.product.price}
         quantity={item.quantity}
-        _onAddQuantity={() => this._onAddQuantity(item.id)}
-        _onDecQuantity={() => this._onDecQuantity(item.id)}
-        _onDeleteCart={() => this._deleteCart(item.id)}
+        _onAddQuantity={() => this.onAddQuantity(item.id, item.quantity)}
+        _onDecQuantity={() => this.onDecQuantity(item.id, item.quantity)}
+        _onDeleteCart={() => this.deleteCart(item.id)}
       />
     );
   };
@@ -138,7 +91,7 @@ class MyCart extends Component {
       return (
         <Content>
           <FlatList
-            data={this.state.data}
+            data={this.props.dataCart}
             renderItem={this._renderItem}
             keyExtractor={this._keyExtractor}
           />
@@ -208,7 +161,8 @@ class MyCart extends Component {
           <View>
             <Text style={styles.txtTotal}>Total</Text>
             <Text style={styles.txtPrice}>
-              {stringToRupiah(this.state.total.toString())}
+              {/* {stringToRupiah(this.state.total)} */}
+              {stringToRupiah(this.generateTotal())}
             </Text>
           </View>
           <View>{this.renderMyCartButton()}</View>
@@ -221,13 +175,17 @@ class MyCart extends Component {
 const mapStateToProps = state => {
   return {
     dataCart: state.cart.data,
-    totalCart: state.cart.total
+    access_token:
+      state.user.access_token.type + " " + state.user.access_token.token,
+    isLoggedIn: state.user.isLoggedIn,
+    access_token:
+      state.user.access_token.type + " " + state.user.access_token.token
   };
 };
 
 export default connect(
   mapStateToProps,
-  { updatCart, deleteCart }
+  { getCart, updatCart, deleteCart }
 )(MyCart);
 
 const styles = StyleSheet.create({

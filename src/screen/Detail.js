@@ -25,18 +25,15 @@ import Config from "react-native-config";
 class Detail extends Component {
   componentDidMount() {
     const { navigation, getProductsById } = this.props;
-    // alert(navigation.getParam("productId", "0"));
-    // productFindById(navigation.getParam("productId", "0"));
-    // alert(navigation.getParam("productId", "0"));
     getProductsById(navigation.getParam("productId", "0"));
   }
 
-  _onPressCart = () => {
-    // this.props.postCart(this.props.detail[0]);
-    // this.props.navigation.navigate("MyCart");
-
+  _onPressCart = id => {
     if (this.props.isLoggedIn) {
-      alert("anda sudah login");
+      // alert(this.props.access_token);
+      const { postCart, access_token } = this.props;
+      postCart(id, 1, access_token);
+      this.props.navigation.navigate("MyCart");
     } else {
       this.props.navigation.navigate("Auth");
     }
@@ -172,7 +169,11 @@ class Detail extends Component {
               </CardItem>
             </Card>
           </Content>
-          <Button style={styles.btnCart} onPress={this._onPressCart} full>
+          <Button
+            style={styles.btnCart}
+            onPress={() => this._onPressCart(detail[0].id)}
+            full
+          >
             <Text style={styles.btnCartTxt}>Tambah Keranjang</Text>
           </Button>
         </Container>
@@ -186,7 +187,9 @@ class Detail extends Component {
 const mapStateToProps = state => {
   return {
     detail: state.products.detail,
-    isLoggedIn: state.user.isLoggedIn
+    isLoggedIn: state.user.isLoggedIn,
+    access_token:
+      state.user.access_token.type + " " + state.user.access_token.token
   };
 };
 

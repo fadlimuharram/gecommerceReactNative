@@ -13,6 +13,7 @@ import { LogoIcon, LockIcon } from "../assets/svg/Love";
 import LinearGradient from "react-native-linear-gradient";
 import { connect } from "react-redux";
 import { login } from "../_actions";
+import axios from "axios";
 class Login extends Component {
   static navigationOptions = {
     header: null
@@ -31,6 +32,7 @@ class Login extends Component {
     this.props.login(email, password);
     this.props.navigation.navigate("Home");
   };
+
   render() {
     return (
       <Container>

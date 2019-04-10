@@ -4,46 +4,31 @@ const INITIAL_STATE = {
   data: []
 };
 
-const { CART_POST, CART_DELETE, CART_UPDATE } = cartConstants;
+const { CART_POST, CART_DELETE, CART_UPDATE, CART_GET } = cartConstants;
 
 export default (state = INITIAL_STATE, action) => {
+  let newState;
   switch (action.type) {
+    case CART_GET:
+      return { ...state, data: action.payload };
     case CART_POST:
-      let newData = [];
-      state.data.forEach((val, index) => {
-        newData.push({
-          id: val.id,
-          name: val.name,
-          price: val.price,
-          desc: val.desc,
-          uri: val.uri,
-          category_id: val.category_id,
-          category: val.category, // dummy
-          quantity: val.quantity ? val.quantity : 1
-        });
-      });
-
-      newData.push({
-        id: action.payload.id,
-        name: action.payload.name,
-        price: action.payload.price,
-        desc: action.payload.desc,
-        uri: action.payload.uri,
-        category_id: action.payload.category_id,
-        category: action.payload.category, // dummy
-        quantity: 1
-      });
-
-      return { ...state, data: newData };
+      return { ...state };
 
     case CART_DELETE:
-      let dt = state.data.filter((val, index) => {
-        return val.id !== action.payload;
+      newState = state.data.filter((val, i) => {
+        return val.id !== action.payload.id;
       });
-      return { ...state, data: dt };
+      return { ...state, data: newState };
 
     case CART_UPDATE:
-      return { ...state, data: action.payload };
+      newState = state.data.map((val, i) => {
+        if (val.id === action.payload.id) {
+          return action.payload;
+        } else {
+          return val;
+        }
+      });
+      return { ...state, data: newState };
 
     default:
       return { ...state };

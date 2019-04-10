@@ -1,7 +1,7 @@
 export const stringToRupiah = str => {
   const prefix = "Rp. ";
-
-  let remove_punctuation = str.replace(/[^\d]/g, "").toString();
+  let toStr = String(str);
+  let remove_punctuation = toStr.replace(/[^\d]/g, "").toString();
   let splitComa = remove_punctuation.split(","); // memisahkan koma
   let remaining = splitComa[0].length % 3; // check sisa dari angka antara 1 dan 2
   let puluhanOrSatuan = splitComa[0].substring(0, remaining); // mengambil angka paling depan antara 1 atau 12

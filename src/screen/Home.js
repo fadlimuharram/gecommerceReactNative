@@ -61,7 +61,6 @@ class Home extends Component {
   componentDidMount() {
     this.props.getCategories(10, 1);
     this.props.getProducts(10, 1);
-    alert(this.props.navigation.getParam("kiriman", "0"));
   }
 
   render() {

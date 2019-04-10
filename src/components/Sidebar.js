@@ -18,6 +18,8 @@ import {
   LogoutLogo,
   SettingLogo
 } from "../assets/svg/Love";
+import { connect } from "react-redux";
+import Config from "react-native-config";
 
 const routes = [
   {
@@ -47,7 +49,7 @@ const routes = [
   }
 ];
 
-export default class SideBar extends React.Component {
+class SideBar extends React.Component {
   renderList = item => (
     <ListItem
       style={styles.listStyle}
@@ -60,6 +62,10 @@ export default class SideBar extends React.Component {
   );
 
   render() {
+    const { username, email, picture } = this.props.user;
+    const generatePic = username
+      ? Config.PIC_URI + picture
+      : Config.PIC_URI + "no_avatar.jpg";
     return (
       <Container>
         <LinearGradient
@@ -71,11 +77,11 @@ export default class SideBar extends React.Component {
               style={styles.imgTop}
               large
               source={{
-                uri: "https://images2.alphacoders.com/644/thumb-1920-644961.png"
+                uri: generatePic
               }}
             />
-            <Text style={styles.txtName}> Fadli Muharram </Text>
-            <Text style={styles.txtEmail}> fadlimuharram@hotmail.com </Text>
+            <Text style={styles.txtName}> {username || "user"} </Text>
+            <Text style={styles.txtEmail}> {email || ""} </Text>
           </View>
           <List
             dataArray={routes}
@@ -89,6 +95,12 @@ export default class SideBar extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return { user: state.user.user };
+};
+
+export default connect(mapStateToProps)(SideBar);
 
 const styles = StyleSheet.create({
   container: {
