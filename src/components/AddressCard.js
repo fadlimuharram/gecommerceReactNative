@@ -12,11 +12,8 @@ class AddressCard extends Component {
           </View>
 
           <View style={styles.addressContent}>
-            <Text style={styles.titleAddress}>Permata Bintaro Residence</Text>
-            <Text style={styles.descAddres}>
-              Jl. Elang IV, Sawah Lama, Ciputat, Kota Tangerang Selatan, Banten
-              15413
-            </Text>
+            <Text style={styles.titleAddress}>{this.props.title}</Text>
+            <Text style={styles.descAddres}>{this.props.address}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -37,11 +34,12 @@ const styles = StyleSheet.create({
     padding: 20
   },
   titleAddress: {
+    width: "100%",
     fontWeight: "bold",
     fontSize: 20
   },
   descAddres: {
     fontSize: 12,
-    width: "80%"
+    width: "100%"
   }
 });

@@ -12,7 +12,7 @@ import {
 import MyCartCard from "../components/MyCartCard";
 import { RightArrow, ArrowLeft2, MapsLogo } from "../assets/svg/Love";
 import { connect } from "react-redux";
-import { getCart, updatCart, deleteCart } from "../_actions";
+import { getCart, getAddress, updatCart, deleteCart } from "../_actions";
 import { stringToRupiah } from "../_helpers";
 import Header from "../components/Header";
 import AddressCart from "../components/AddressCard";
@@ -40,6 +40,7 @@ class MyCart extends Component {
     } else {
       this.props.navigation.addListener("didFocus", () => {
         this.props.getCart(access_token);
+        this.props.getAddress(access_token);
       });
     }
   }
@@ -94,6 +95,16 @@ class MyCart extends Component {
 
   _keyExtractor = (item, index) => item.id;
 
+  renderAddress = () => {
+    return this.props.dataAddress.map((val, i) => (
+      <AddressCart
+        title={val.title}
+        address={val.address}
+        _onPress={this._onPressToCheckOut}
+      />
+    ));
+  };
+
   renderMyCart = () => {
     if (this.state.isMyCartShow) {
       return (
@@ -113,11 +124,7 @@ class MyCart extends Component {
           <Card>
             <CardItem>
               <Body>
-                <AddressCart _onPress={this._onPressToCheckOut} />
-                <AddressCart _onPress={this._onPressToCheckOut} />
-                <AddressCart _onPress={this._onPressToCheckOut} />
-                <AddressCart _onPress={this._onPressToCheckOut} />
-
+                {this.renderAddress()}
                 <TouchableOpacity
                   onPress={this._onPressToAddAddress}
                   style={{ alignSelf: "flex-end" }}
@@ -187,13 +194,14 @@ const mapStateToProps = state => {
     totalCart: state.cart.total,
     access_token:
       state.user.access_token.type + " " + state.user.access_token.token,
-    isLoggedIn: state.user.isLoggedIn
+    isLoggedIn: state.user.isLoggedIn,
+    dataAddress: state.address.data
   };
 };
 
 export default connect(
   mapStateToProps,
-  { getCart, updatCart, deleteCart }
+  { getCart, getAddress, updatCart, deleteCart }
 )(MyCart);
 
 const styles = StyleSheet.create({

@@ -9,7 +9,18 @@ import {
 } from "react-native";
 import { ChatLogo, NotificationLogo } from "../assets/svg/Love";
 import { Item, Input } from "native-base";
+import { connect } from "react-redux";
+import { getProductsBySearch } from "../_actions";
 class HeaderDiscover extends Component {
+  state = {
+    search: ""
+  };
+
+  onSearchSubmit = () => {
+    this.props.getProductsBySearch(this.state.search);
+    this.props.navigation.navigate("Discover");
+  };
+
   render() {
     const { onLeftLogoPress, renderLeftLogo } = this.props;
     return (
@@ -25,6 +36,9 @@ class HeaderDiscover extends Component {
                 underlineColorAndroid="transparent"
                 style={styles.searchInput}
                 placeholder="pencarian"
+                onChangeText={search => this.setState({ search })}
+                onSubmitEditing={this.onSearchSubmit}
+                value={this.state.search}
               />
             </Item>
             <TouchableOpacity style={styles.chatContainer}>
@@ -40,7 +54,10 @@ class HeaderDiscover extends Component {
   }
 }
 
-export default HeaderDiscover;
+export default connect(
+  "",
+  { getProductsBySearch }
+)(HeaderDiscover);
 
 const styles = StyleSheet.create({
   content: {

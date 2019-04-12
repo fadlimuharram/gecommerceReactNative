@@ -17,7 +17,10 @@ import { register } from "../_actions";
 
 class Register extends Component {
   static navigationOptions = {
-    header: null,
+    header: null
+  };
+
+  state = {
     username: "",
     email: "",
     password: "",
@@ -50,7 +53,7 @@ class Register extends Component {
                     <Input
                       placeholder="username"
                       placeholderTextColor="white"
-                      onChangeText={username => this.setState(username)}
+                      onChangeText={username => this.setState({ username })}
                       value={this.state.username}
                     />
                   </Item>
@@ -59,14 +62,14 @@ class Register extends Component {
                       placeholder="email"
                       placeholderTextColor="white"
                       value={this.state.email}
-                      onChangeText={email => this.setState(email)}
+                      onChangeText={email => this.setState({ email })}
                     />
                   </Item>
                   <Item>
                     <Input
                       placeholder="password"
                       placeholderTextColor="white"
-                      onChangeText={password => this.setState(password)}
+                      onChangeText={password => this.setState({ password })}
                       value={this.state.password}
                     />
                   </Item>
@@ -76,7 +79,7 @@ class Register extends Component {
                       placeholderTextColor="white"
                       value={this.state.confirm_password}
                       onChangeText={confirm_password =>
-                        this.setState(confirm_password)
+                        this.setState({ confirm_password })
                       }
                     />
                   </Item>
@@ -102,14 +105,8 @@ class Register extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    dataUser: state.user
-  };
-};
-
 export default connect(
-  mapStateToProps,
+  "",
   { registerUser: register }
 )(Register);
 

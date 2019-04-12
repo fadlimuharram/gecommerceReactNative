@@ -4,11 +4,13 @@ import products from "./products.reducer";
 import categories from "./categories.reducer";
 import cart from "./cart.reducer";
 import user from "./user.reducer";
+import address from "./address.reducer";
 
 export default combineReducers({
   wishlist,
   products,
   categories,
   cart,
-  user
+  user,
+  address
 });

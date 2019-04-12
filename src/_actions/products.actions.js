@@ -56,3 +56,18 @@ export const getProductsByCategory = (
     console.log(e);
   }
 };
+
+export const getProductsBySearch = (search, limit, page) => async dispatch => {
+  try {
+    const fullUri = `${
+      Config.API_URL
+    }products/search?limit=${limit}&page=${page}`;
+    const products = await axios.post(fullUri, {
+      search
+    });
+
+    dispatch({ type: PRODUCTS_GET, payload: products.data });
+  } catch (e) {
+    console.log(e);
+  }
+};

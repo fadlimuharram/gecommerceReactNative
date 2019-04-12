@@ -32,8 +32,11 @@ class Discover extends Component {
 
   componentDidMount() {
     const { navigation, getProductsByCategory } = this.props;
+    const getCategoryID = navigation.getParam("categoryId", 0);
+    if (getCategoryID !== 0) {
+      getProductsByCategory(getCategoryID, 1, 1);
+    }
 
-    getProductsByCategory(navigation.getParam("categoryId", "0"), 1, 1);
     // const { navigation, products, productGetByCategoryId } = this.props;
 
     // productGetByCategoryId(navigation.getParam("categoryId", "0"));
@@ -63,6 +66,12 @@ class Discover extends Component {
   //     />
   //   );
   // };
+
+  onPressDetail = productId => {
+    this.props.navigation.navigate("Detail", {
+      productId: productId
+    });
+  };
 
   renderItemRecommendation = ({ item }) => (
     <HomeCardRecommendation
