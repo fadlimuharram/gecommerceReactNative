@@ -80,7 +80,7 @@ class Discover extends Component {
       title={item.name}
       price={String(item.price)}
       bgColor="rgba(137, 155, 107, 1.0)"
-      onPress={() => this.onPressDetail(item.category_id)}
+      onPress={() => this.onPressDetail(item.id)}
     />
   );
 
