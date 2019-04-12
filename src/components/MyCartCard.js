@@ -29,6 +29,11 @@ class MyCartCard extends React.Component {
       tempQuantity: this.props.quantity
     });
   }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.quantity !== this.state.tempQuantity) {
+      this.setState({ tempQuantity: nextProps.quantity });
+    }
+  }
 
   onQuantityChange = text => {
     if (text > 0) {
@@ -95,7 +100,7 @@ class MyCartCard extends React.Component {
                 </Button>
                 <TextInput
                   style={styles.txtItemCount}
-                  value={String(this.props.quantity || this.state.tempQuantity)}
+                  value={String(this.state.tempQuantity)}
                   onChangeText={this.onQuantityChange}
                 />
 
