@@ -7,13 +7,14 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   TouchableOpacity,
-  StatusBar
+  StatusBar,
+  AsyncStorage
 } from "react-native";
 import { LogoIcon, LockIcon } from "../assets/svg/Love";
 import LinearGradient from "react-native-linear-gradient";
 import { connect } from "react-redux";
-import { login } from "../_actions";
-import axios from "axios";
+import { login, clearUser } from "../_actions";
+
 class Login extends Component {
   static navigationOptions = {
     header: null
@@ -83,7 +84,7 @@ class Login extends Component {
 
 export default connect(
   "",
-  { login }
+  { login, clearUser }
 )(Login);
 
 const styles = StyleSheet.create({

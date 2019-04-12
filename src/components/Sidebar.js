@@ -16,7 +16,8 @@ import {
   CartLogo,
   SupportLogo,
   LogoutLogo,
-  SettingLogo
+  SettingLogo,
+  LogoIcon
 } from "../assets/svg/Love";
 import { connect } from "react-redux";
 import Config from "react-native-config";
@@ -44,12 +45,67 @@ const routes = [
   },
   {
     name: "Keluar",
-    routeName: "MyCart",
+    routeName: "Logout",
     icon: <LogoutLogo width="25" height="25" color="black" />
   }
 ];
 
 class SideBar extends React.Component {
+  state = {
+    routes: [
+      {
+        name: "Kategori",
+        routeName: "Home",
+        icon: <CategoriesPlantLogo width="25" height="25" color="#1D1E20" />
+      },
+      {
+        name: "Keranjang",
+        routeName: "MyCart",
+        icon: <CartLogo width="25" height="25" color="#1D1E20" />
+      },
+      {
+        name: "Pengaturan",
+        routeName: "Setting",
+        icon: <SettingLogo width="25" height="25" color="#1D1E20" />
+      },
+      {
+        name: "Bantuan",
+        routeName: "MyCart",
+        icon: <SupportLogo width="25" height="25" color="black" />
+      }
+    ]
+  };
+
+  renderLoginLogout = () => {
+    if (this.props.isLoggedIn) {
+      return (
+        <ListItem
+          style={styles.listStyle}
+          button
+          onPress={() =>
+            this.props.navigation.navigate("Logout", {
+              condition: "logout"
+            })
+          }
+        >
+          <LogoutLogo width="25" height="25" color="black" />
+          <Text style={styles.txtItem}>Logout</Text>
+        </ListItem>
+      );
+    } else {
+      return (
+        <ListItem
+          style={styles.listStyle}
+          button
+          onPress={() => this.props.navigation.navigate("Auth")}
+        >
+          <LogoIcon width="25" height="25" color="black" />
+          <Text style={styles.txtItem}>Login</Text>
+        </ListItem>
+      );
+    }
+  };
+
   renderList = item => (
     <ListItem
       style={styles.listStyle}
@@ -61,11 +117,34 @@ class SideBar extends React.Component {
     </ListItem>
   );
 
+  generateLoginLogout = () => {
+    if (this.props.isLoggedIn) {
+      return (
+        <ListItem
+          style={styles.listStyle}
+          button
+          onPress={() =>
+            this.props.navigation.navigate("MyCart", {
+              condition: "logout"
+            })
+          }
+        >
+          <LogoutLogo width="25" height="25" color="black" />
+          <Text style={styles.txtItem}>{String(this.props.isLoggedIn)}</Text>
+        </ListItem>
+      );
+    }
+  };
+
   render() {
-    const { username, email, picture } = this.props.user;
-    const generatePic = username
-      ? Config.PIC_URI + picture
-      : Config.PIC_URI + "no_avatar.jpg";
+    let username = "anonymous";
+    let email = "";
+    let image = "no_avatar.jpg";
+    if (this.props.isLoggedIn) {
+      username = this.props.user.username;
+      email = this.props.user.email;
+      image = this.props.user.picture;
+    }
     return (
       <Container>
         <LinearGradient
@@ -77,19 +156,20 @@ class SideBar extends React.Component {
               style={styles.imgTop}
               large
               source={{
-                uri: generatePic
+                uri: Config.PIC_URI + image
               }}
             />
-            <Text style={styles.txtName}> {username || "user"} </Text>
-            <Text style={styles.txtEmail}> {email || ""} </Text>
+            <Text style={styles.txtName}>{username}</Text>
+            <Text style={styles.txtEmail}>{email}</Text>
           </View>
           <List
-            dataArray={routes}
+            dataArray={this.state.routes}
             contentContainerStyle={{
               borderColor: "transparent"
             }}
             renderRow={this.renderList}
           />
+          {this.renderLoginLogout()}
         </LinearGradient>
       </Container>
     );
@@ -97,7 +177,10 @@ class SideBar extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return { user: state.user.user };
+  return {
+    user: state.user.user,
+    isLoggedIn: state.user.isLoggedIn
+  };
 };
 
 export default connect(mapStateToProps)(SideBar);

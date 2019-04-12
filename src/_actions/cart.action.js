@@ -17,7 +17,6 @@ export const postCart = (product_id, quantity, token) => async dispatch => {
       }
     )
     .then(response => {
-      // alert(JSON.stringify(response.data));
       dispatch({ type: CART_POST, payload: response.data });
     })
     .catch(err => console.log(err));
@@ -30,7 +29,7 @@ export const getCart = token => async dispatch => {
     }
   });
 
-  dispatch({ type: CART_GET, payload: response.data.data });
+  dispatch({ type: CART_GET, payload: response.data });
 };
 
 export const deleteCart = (id, token) => async dispatch => {
@@ -40,7 +39,7 @@ export const deleteCart = (id, token) => async dispatch => {
       Authorization: token
     }
   });
-  dispatch({ type: CART_DELETE, payload: response.data.data });
+  dispatch({ type: CART_DELETE, payload: response.data });
 };
 
 export const updatCart = (id, quantity, token) => async dispatch => {
@@ -54,5 +53,5 @@ export const updatCart = (id, quantity, token) => async dispatch => {
       }
     }
   );
-  dispatch({ type: CART_UPDATE, payload: response.data.data });
+  dispatch({ type: CART_UPDATE, payload: response.data });
 };

@@ -33,7 +33,7 @@ class MyCart extends Component {
     this.props.navigation.navigate("AddAddress");
   };
 
-  componentDidMount() {
+  isLoggedInStatus() {
     const { isLoggedIn, access_token } = this.props;
     if (!isLoggedIn) {
       this.props.navigation.navigate("Auth");
@@ -56,22 +56,30 @@ class MyCart extends Component {
     }
   };
 
+  onQuantityTextChange = (id, oldQuantity) => {
+    this.props.updatCart(id, oldQuantity, this.props.access_token);
+  };
+
   deleteCart = id => {
     this.props.deleteCart(id, this.props.access_token);
+    this.props.getCart(this.props.access_token);
   };
 
   generateTotal = () => {
     // alert(this.props.dataCart[0].product.name);
-    let ttl = 0;
-    this.props.dataCart.forEach((val, i) => {
-      ttl += val.quantity * val.product.price;
-    });
-    return String(ttl);
+    if (this.props.dataCart) {
+      let ttl = 0;
+      this.props.dataCart.forEach((val, i) => {
+        ttl += val.quantity * val.product.price;
+      });
+      return String(ttl);
+    }
   };
 
   _renderItem = ({ item }) => {
     return (
       <MyCartCard
+        id={item.id}
         uri={Config.PIC_URI + item.product.pictures[0].cover}
         title={item.product.name}
         category={item.product.category.name}
@@ -151,6 +159,7 @@ class MyCart extends Component {
   };
 
   render() {
+    this.isLoggedInStatus();
     return (
       <Container>
         <Header {...this.props} />
@@ -162,7 +171,7 @@ class MyCart extends Component {
             <Text style={styles.txtTotal}>Total</Text>
             <Text style={styles.txtPrice}>
               {/* {stringToRupiah(this.state.total)} */}
-              {stringToRupiah(this.generateTotal())}
+              {stringToRupiah(String(this.props.totalCart))}
             </Text>
           </View>
           <View>{this.renderMyCartButton()}</View>
@@ -175,11 +184,10 @@ class MyCart extends Component {
 const mapStateToProps = state => {
   return {
     dataCart: state.cart.data,
+    totalCart: state.cart.total,
     access_token:
       state.user.access_token.type + " " + state.user.access_token.token,
-    isLoggedIn: state.user.isLoggedIn,
-    access_token:
-      state.user.access_token.type + " " + state.user.access_token.token
+    isLoggedIn: state.user.isLoggedIn
   };
 };
 

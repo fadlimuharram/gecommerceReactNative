@@ -16,61 +16,117 @@ import {
 
 import { DeleteBtnX, PlusLogo, MinusLogo } from "../assets/svg/Love";
 import { stringToRupiah } from "../_helpers";
-const MyCartCard = ({
-  uri,
-  title,
-  category,
-  price,
-  quantity,
-  _onAddQuantity,
-  _onDecQuantity,
-  _onDeleteCart
-}) => (
-  <Card>
-    <CardItem style={styles.card}>
-      <Body style={styles.body}>
-        <View style={styles.bodyLeft}>
-          <Image
-            source={{
-              uri
-            }}
-            style={styles.imgItem}
-          />
-        </View>
-        <View style={styles.bodyRight}>
-          <View styles={styles.titleContainer}>
-            <Text style={styles.txtTitel}>{title}</Text>
-            <Text style={styles.txtCategory}>{category}</Text>
-          </View>
+import { connect } from "react-redux";
+import { updatCart, getCart } from "../_actions";
 
-          <Button
-            small
-            transparent
-            onPress={_onDeleteCart}
-            style={styles.btnDelete}
-          >
-            <DeleteBtnX width="10" height="10" color="black" />
-          </Button>
+class MyCartCard extends React.Component {
+  state = {
+    tempQuantity: 0
+  };
 
-          <View style={styles.priceContainer}>
-            <Text style={styles.txtPrice}>{stringToRupiah(price)}</Text>
+  componentDidMount() {
+    this.setState({
+      tempQuantity: this.props.quantity
+    });
+  }
 
-            <Button transparent onPress={_onDecQuantity} style={styles.btnCart}>
-              <MinusLogo width="10" height="10" color="black" />
-            </Button>
-            <TextInput style={styles.txtItemCount} value={String(quantity)} />
+  onQuantityChange = text => {
+    if (text > 0) {
+      this.props.updatCart(this.props.id, text, this.props.access_token);
+      this.setState({
+        tempQuantity: this.props.quantity
+      });
+    }
 
-            <Button transparent onPress={_onAddQuantity} style={styles.btnCart}>
-              <PlusLogo width="10" height="10" color="black" />
-            </Button>
-          </View>
-        </View>
-      </Body>
-    </CardItem>
-  </Card>
-);
+    this.setState({
+      tempQuantity: text
+    });
+  };
 
-export default MyCartCard;
+  render() {
+    const {
+      id,
+      uri,
+      title,
+      category,
+      price,
+      quantity,
+      _onAddQuantity,
+      _onDecQuantity,
+      _onDeleteCart,
+      onQuantityTextChange
+    } = this.props;
+    return (
+      <Card>
+        <CardItem style={styles.card}>
+          <Body style={styles.body}>
+            <View style={styles.bodyLeft}>
+              <Image
+                source={{
+                  uri
+                }}
+                style={styles.imgItem}
+              />
+            </View>
+            <View style={styles.bodyRight}>
+              <View styles={styles.titleContainer}>
+                <Text style={styles.txtTitel}>{title}</Text>
+                <Text style={styles.txtCategory}>{category}</Text>
+              </View>
+
+              <Button
+                small
+                transparent
+                onPress={_onDeleteCart}
+                style={styles.btnDelete}
+              >
+                <DeleteBtnX width="10" height="10" color="black" />
+              </Button>
+
+              <View style={styles.priceContainer}>
+                <Text style={styles.txtPrice}>{stringToRupiah(price)}</Text>
+
+                <Button
+                  transparent
+                  onPress={_onDecQuantity}
+                  style={styles.btnCart}
+                >
+                  <MinusLogo width="10" height="10" color="black" />
+                </Button>
+                <TextInput
+                  style={styles.txtItemCount}
+                  value={String(this.props.quantity || this.state.tempQuantity)}
+                  onChangeText={this.onQuantityChange}
+                />
+
+                <Button
+                  transparent
+                  onPress={_onAddQuantity}
+                  style={styles.btnCart}
+                >
+                  <PlusLogo width="10" height="10" color="black" />
+                </Button>
+              </View>
+            </View>
+          </Body>
+        </CardItem>
+      </Card>
+    );
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    access_token:
+      state.user.access_token.type + " " + state.user.access_token.token,
+    isLoggedIn: state.user.isLoggedIn
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { updatCart, getCart }
+)(MyCartCard);
 
 const styles = StyleSheet.create({
   body: {

@@ -10,6 +10,7 @@ import RegisterScreen from "../screen/Register";
 import SideBar from "../components/Sidebar";
 import SettingScreen from "../screen/Settings";
 import AddAddress from "../screen/AddAddress";
+import Logout from "../screen/Logout";
 
 export const drawerNav = createDrawerNavigator(
   {
@@ -26,6 +27,9 @@ export const drawerNav = createDrawerNavigator(
     },
     Setting: {
       screen: SettingScreen
+    },
+    Logout: {
+      screen: Logout
     }
   },
   {

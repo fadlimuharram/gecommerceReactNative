@@ -39,3 +39,20 @@ export const getProductsById = id => async dispatch => {
     console.log(e);
   }
 };
+
+export const getProductsByCategory = (
+  categoryId,
+  limit,
+  page
+) => async dispatch => {
+  try {
+    const fullUri = `${
+      Config.API_URL
+    }products/category/${categoryId}?limit=${limit}&page=${page}`;
+    const products = await axios.get(fullUri);
+
+    dispatch({ type: PRODUCTS_GET, payload: products.data });
+  } catch (e) {
+    console.log(e);
+  }
+};

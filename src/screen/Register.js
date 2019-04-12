@@ -12,15 +12,25 @@ import { Container, Form, Item, Input, Button } from "native-base";
 import LinearGradient from "react-native-linear-gradient";
 
 import { LogoIcon } from "../assets/svg/Love";
+import { connect } from "react-redux";
+import { register } from "../_actions";
 
 class Register extends Component {
   static navigationOptions = {
-    header: null
+    header: null,
+    username: "",
+    email: "",
+    password: "",
+    confirm_password: ""
   };
   _toLogin = () => {
     this.props.navigation.navigate("Login");
   };
   _toHome = () => {
+    const { confirm_password, password, email, username } = this.state;
+    if (confirm_password !== password) alert("password not match");
+
+    this.props.registerUser(username, email, password, confirm_password);
     this.props.navigation.navigate("Home");
   };
   render() {
@@ -40,21 +50,34 @@ class Register extends Component {
                     <Input
                       placeholder="username"
                       placeholderTextColor="white"
+                      onChangeText={username => this.setState(username)}
+                      value={this.state.username}
                     />
                   </Item>
                   <Item>
-                    <Input placeholder="email" placeholderTextColor="white" />
+                    <Input
+                      placeholder="email"
+                      placeholderTextColor="white"
+                      value={this.state.email}
+                      onChangeText={email => this.setState(email)}
+                    />
                   </Item>
                   <Item>
                     <Input
                       placeholder="password"
                       placeholderTextColor="white"
+                      onChangeText={password => this.setState(password)}
+                      value={this.state.password}
                     />
                   </Item>
                   <Item>
                     <Input
                       placeholder="confirm password"
                       placeholderTextColor="white"
+                      value={this.state.confirm_password}
+                      onChangeText={confirm_password =>
+                        this.setState(confirm_password)
+                      }
                     />
                   </Item>
                   <Button
@@ -79,7 +102,16 @@ class Register extends Component {
   }
 }
 
-export default Register;
+const mapStateToProps = state => {
+  return {
+    dataUser: state.user
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { registerUser: register }
+)(Register);
 
 const styles = StyleSheet.create({
   content: {

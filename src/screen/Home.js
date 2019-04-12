@@ -6,7 +6,8 @@ import {
   ImageBackground,
   FlatList,
   ScrollView,
-  Image
+  Image,
+  AsyncStorage
 } from "react-native";
 import { compose } from "redux";
 import { Container, Content, Text, Card, CardItem } from "native-base";
@@ -16,7 +17,7 @@ import HomeCardRecommendation from "../components/HomeCardRecommendation";
 import Header from "../components/Header";
 import Swiper from "react-native-swiper";
 import { withHeaderSideBar } from "./withHeaderHOC";
-import { getCategories, getProducts } from "../_actions";
+import { getCategories, getProducts, clearUser } from "../_actions";
 import Config from "react-native-config";
 
 class Home extends Component {
@@ -52,26 +53,19 @@ class Home extends Component {
       uri={Config.PIC_URI + item.pictures[0].cover}
       title={item.name}
       price={String(item.price)}
-      // category={"kosong"}
       bgColor="rgba(137, 155, 107, 1.0)"
-      onPress={() => this.onPressDetail(item.id)}
+      onPress={() => this.onPressDetail(item.category_id)}
     />
   );
 
   componentDidMount() {
-    this.props.getCategories(10, 1);
-    this.props.getProducts(10, 1);
+    this.props.navigation.addListener("didFocus", () => {
+      this.props.getCategories(10, 1);
+      this.props.getProducts(10, 1);
+    });
   }
 
   render() {
-    // alert(String(this.props.categories));
-    // console.log("Qq", this.props.categories);
-    // if (this.props.categories.length > 0) {
-    //   return <Text>{this.props.categories[0].name}</Text>;
-    // } else {
-    //   return <Text>kosong</Text>;
-    // }
-
     const { categories, products } = this.props;
 
     if (categories.length > 0 && products) {
@@ -173,7 +167,7 @@ const enhance = compose(
   withHeaderSideBar,
   connect(
     mapStateToProps,
-    { getCategories, getProducts }
+    { getCategories, getProducts, clearUser }
   )
 );
 

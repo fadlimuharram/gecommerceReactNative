@@ -13,6 +13,7 @@ export default (state = INITIAL_STATE, action) => {
     case PRODUCTS_GET:
       return {
         ...state,
+        ...INITIAL_STATE,
         data: action.payload.rows,
         pages: action.payload.pages
       };

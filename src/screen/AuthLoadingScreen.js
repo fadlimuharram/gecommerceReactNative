@@ -4,7 +4,8 @@ import {
   StyleSheet,
   View,
   Text,
-  StatusBar
+  StatusBar,
+  AsyncStorage
 } from "react-native";
 import { Container, Content } from "native-base";
 import { LogoIcon } from "../assets/svg/Love";
@@ -20,7 +21,8 @@ import {
   WaveIndicator
 } from "react-native-indicators";
 import LinearGradient from "react-native-linear-gradient";
-
+import { connect } from "react-redux";
+import { retrieveUser } from "../_actions";
 class AuthLoadingScreen extends Component {
   constructor() {
     super();
@@ -36,6 +38,15 @@ class AuthLoadingScreen extends Component {
   //   this.props.navigation.navigate("Auth");
   // }
 
+  async componentDidMount() {
+    const access_token = await AsyncStorage.getItem("access_token");
+    const user = await AsyncStorage.getItem("user");
+    if (access_token && user) {
+      this.props.retrieveUser(JSON.parse(user), JSON.parse(access_token));
+    }
+    // alert(JSON.stringify(this.props.user));
+  }
+
   render() {
     return (
       <LinearGradient colors={["#3BCEAC", "#28AE5E"]} style={styles.content}>
@@ -50,7 +61,17 @@ class AuthLoadingScreen extends Component {
   }
 }
 
-export default AuthLoadingScreen;
+const mapStateToProps = state => {
+  return {
+    user: state.user.user,
+    access_token: state.user.access_token
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { retrieveUser }
+)(AuthLoadingScreen);
 
 const styles = StyleSheet.create({
   content: {
