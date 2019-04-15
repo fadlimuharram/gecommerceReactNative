@@ -20,8 +20,17 @@ import {
 class ProfileCard extends Component {
   state = {
     avatarSource: null,
-    isChangeProfileSelected: false
+    isChangeProfileSelected: false,
+    username: "",
+    email: ""
   };
+
+  componentDidMount() {
+    this.setState({
+      username: this.props.username,
+      email: this.props.email
+    });
+  }
 
   selectPhotoTapped = () => {
     const options = {
@@ -67,10 +76,10 @@ class ProfileCard extends Component {
         <View style={styles.topDataProfileContainer}>
           <Text>Ubah Data Profile</Text>
           <Item stackedLabel>
-            <Input placeholder="Username" value="Fadli Muharram" />
+            <Input placeholder="Username" value={this.state.username} />
           </Item>
           <Item stackedLabel>
-            <Input placeholder="Email" value="fadlimuharram@hotmail.com" />
+            <Input placeholder="Email" value={this.state.email} />
           </Item>
           <View style={styles.avatarContainer}>
             <Text>Ubah Avatar</Text>
@@ -123,8 +132,8 @@ class ProfileCard extends Component {
             />
           </View>
           <View style={styles.topRight}>
-            <Text style={styles.txtName}>Fadli Muharram</Text>
-            <Text style={styles.txtEmail}>fadlimuharram@hotmail.com</Text>
+            <Text style={styles.txtName}>{this.props.username}</Text>
+            <Text style={styles.txtEmail}>{this.props.email}</Text>
           </View>
           <View style={styles.toggleIcon}>
             <TouchableOpacity onPress={this.toggleProfile}>

@@ -1,8 +1,9 @@
 import React from "react";
 import { createStore, applyMiddleware, compose } from "redux";
-
+import logger from "redux-logger";
 import reduxThunk from "redux-thunk";
 import reducers from "../_reducers";
+import promise from "redux-promise-middleware";
 
 const composeEnhancers =
   typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -12,7 +13,7 @@ const composeEnhancers =
     : compose;
 
 const enhancer = composeEnhancers(
-  applyMiddleware(reduxThunk)
+  applyMiddleware(reduxThunk, logger, promise)
   // other store enhancers if any
 );
 

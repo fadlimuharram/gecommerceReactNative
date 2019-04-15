@@ -18,9 +18,15 @@ class FormAddress extends Component {
     isEdited: false,
     province: [],
     selectedProvince: 6,
+    selectedProvinceData: [],
     city: [],
     selectedCity: 0,
-    selectedCityData: []
+    selectedCityData: [],
+    title: "",
+    address: "",
+    postal: "",
+    receiver: "",
+    phone: ""
   };
 
   componentDidMount() {
@@ -30,6 +36,33 @@ class FormAddress extends Component {
     this.requestProvince();
     this.requestCity(this.state.selectedProvince);
   }
+
+  onSubmit = () => {
+    // this.props.onSubmit();
+    const {
+      title,
+      address,
+      selectedProvinceData,
+      selectedProvince,
+      selectedCityData,
+      selectedCity,
+      postal,
+      receiver,
+      phone
+    } = this.state;
+    const data = {
+      title,
+      address,
+      province: selectedProvinceData.province,
+      province_id: selectedProvince,
+      city: selectedCityData.city_name,
+      city_id: selectedCity,
+      postal,
+      receiver,
+      phone
+    };
+    this.props.onSubmit(data);
+  };
 
   requestProvince = () => {
     axios
@@ -43,6 +76,7 @@ class FormAddress extends Component {
           province: res.data.data.rajaongkir.results,
           selectedProvince: "6"
         });
+        this.findProvinceById();
       });
   };
 
@@ -76,7 +110,7 @@ class FormAddress extends Component {
       );
     } else {
       return (
-        <Button style={styles.btnSave} full>
+        <Button style={styles.btnSave} onPress={this.onSubmit} full>
           <Text style={styles.txtSave}>Simpan</Text>
         </Button>
       );
@@ -98,8 +132,9 @@ class FormAddress extends Component {
   onValueProvinceChange = val => {
     this.setState({
       selectedProvince: val
+      // province: dataProvince.province
     });
-
+    this.findProvinceById();
     this.requestCity(val);
   };
 
@@ -110,12 +145,23 @@ class FormAddress extends Component {
     this.findPostalByIdCity();
   };
 
+  findProvinceById = () => {
+    const dataProvince = this.state.province.find((value, i) => {
+      return value.province_id === this.state.selectedProvince;
+    });
+
+    this.setState({
+      selectedProvinceData: dataProvince
+    });
+  };
+
   findPostalByIdCity = () => {
     const dataCity = this.state.city.find((val, i) => {
       return val.city_id === this.state.selectedCity;
     });
     this.setState({
-      selectedCityData: dataCity
+      selectedCityData: dataCity,
+      postal: dataCity.postal_code
     });
   };
   render() {
@@ -123,12 +169,20 @@ class FormAddress extends Component {
       <Form>
         <Card style={styles.card}>
           <Item>
-            <Input placeholder="Simpan Sebagai" />
+            <Input
+              placeholder="Simpan Sebagai"
+              value={this.state.title}
+              onChangeText={title => this.setState({ title })}
+            />
           </Item>
         </Card>
         <Card style={styles.card}>
           <Item>
-            <Input placeholder="Alamat" />
+            <Input
+              placeholder="Alamat"
+              value={this.state.address}
+              onChangeText={address => this.setState({ address })}
+            />
           </Item>
 
           <Item inlineLabel>
@@ -160,21 +214,26 @@ class FormAddress extends Component {
           <Item>
             <Input
               placeholder="Kode Pos"
-              defaultValue={
-                this.state.selectedCityData &&
-                this.state.selectedCityData.postal_code
-              }
+              value={this.state.postal}
+              onChangeText={postal => this.setState({ postal })}
             />
           </Item>
         </Card>
 
         <Card style={styles.card}>
           <Item>
-            <Input placeholder="Nama Penerima" />
+            <Input
+              placeholder="Nama Penerima"
+              value={this.state.receiver}
+              onChangeText={receiver => this.setState({ receiver })}
+            />
           </Item>
-
           <Item>
-            <Input placeholder="No Telepon Penerima" />
+            <Input
+              placeholder="No Telepon Penerima"
+              value={this.state.phone}
+              onChangeText={phone => this.setState({ phone })}
+            />
           </Item>
         </Card>
         {this.renderButton()}

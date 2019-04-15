@@ -7,7 +7,8 @@ const {
   LOGIN_FAIL,
   LOGIN_SUCCESS,
   REGISTER_SUCCESS,
-  CLEAR_USER
+  CLEAR_USER,
+  GET_USER_DATA
 } = userConstants;
 
 export const login = (email, password) => dispatch => {
@@ -41,6 +42,26 @@ export const register = (
     });
 };
 
+export const getUser = token => async dispatch => {
+  try {
+    const fullUri = `${Config.API_URL}users/data`;
+    const response = await axios.get(fullUri, {
+      headers: {
+        Authorization: token
+      }
+    });
+    _storeData("user", JSON.stringify(response.data.user));
+    dispatch({ type: GET_USER_DATA, payload: response.data.user });
+  } catch (e) {
+    console.log("qq-->", e);
+  }
+};
+
+/**
+ * untuk async storage
+ * @param {*} user
+ * @param {*} access_token
+ */
 export const retrieveUser = (user, access_token) => dispatch => {
   const data = {
     user,

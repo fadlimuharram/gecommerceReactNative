@@ -4,9 +4,10 @@ import {
   StyleSheet,
   View,
   Text,
-  StatusBar,
-  AsyncStorage
+  StatusBar
 } from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
+
 import { Container, Content } from "native-base";
 import { LogoIcon } from "../assets/svg/Love";
 import {
@@ -22,7 +23,7 @@ import {
 } from "react-native-indicators";
 import LinearGradient from "react-native-linear-gradient";
 import { connect } from "react-redux";
-import { retrieveUser } from "../_actions";
+import { retrieveUser, getUser } from "../_actions";
 class AuthLoadingScreen extends Component {
   constructor() {
     super();
@@ -43,6 +44,9 @@ class AuthLoadingScreen extends Component {
     const user = await AsyncStorage.getItem("user");
     if (access_token && user) {
       this.props.retrieveUser(JSON.parse(user), JSON.parse(access_token));
+      const parseToken = JSON.parse(access_token);
+      const token = parseToken.type + " " + parseToken.token;
+      this.props.getUser(token);
     }
     // alert(JSON.stringify(this.props.user));
   }
@@ -70,7 +74,7 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { retrieveUser }
+  { retrieveUser, getUser }
 )(AuthLoadingScreen);
 
 const styles = StyleSheet.create({

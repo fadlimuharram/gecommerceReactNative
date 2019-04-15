@@ -6,7 +6,12 @@ const INITIAL_STATE = {
   isLoggedIn: false
 };
 
-const { LOGIN_SUCCESS, REGISTER_SUCCESS, CLEAR_USER } = userConstants;
+const {
+  LOGIN_SUCCESS,
+  REGISTER_SUCCESS,
+  CLEAR_USER,
+  GET_USER_DATA
+} = userConstants;
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -22,6 +27,11 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         user: action.payload.user,
         access_token: action.payload.access_token
+      };
+    case GET_USER_DATA:
+      return {
+        ...state,
+        user: action.payload
       };
     case CLEAR_USER:
       return {

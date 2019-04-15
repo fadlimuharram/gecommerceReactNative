@@ -11,14 +11,31 @@ import Header from "../components/Header";
 import ProfileCard from "../components/settings/ProfileCard";
 import AddressSettingCard from "../components/settings/AddressCard";
 import PasswordCard from "../components/settings/PasswordCard";
-
+import { connect } from "react-redux";
 class Settings extends Component {
+  componentDidMount() {
+    this.isLoggedInStatus();
+  }
+  isLoggedInStatus() {
+    const { isLoggedIn, access_token } = this.props;
+    if (!isLoggedIn) {
+      this.props.navigation.navigate("Auth");
+    } else {
+      this.props.navigation.addListener("didFocus", () => {
+        // this.props.getCart(access_token);
+        // this.props.getAddress(access_token);
+      });
+    }
+  }
   render() {
     return (
       <Container>
         <Header {...this.props} />
         <Content>
-          <ProfileCard />
+          <ProfileCard
+            username={this.props.userData.username}
+            email={this.props.userData.email}
+          />
           <AddressSettingCard {...this.props} />
           <PasswordCard />
 
@@ -31,4 +48,11 @@ class Settings extends Component {
   }
 }
 
-export default Settings;
+const mapStateToProps = state => {
+  return {
+    isLoggedIn: state.user.isLoggedIn,
+    userData: state.user.user
+  };
+};
+
+export default connect(mapStateToProps)(Settings);

@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { View, StyleSheet, FlatList, TouchableOpacity } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Alert,
+  FlatList,
+  TouchableOpacity
+} from "react-native";
 import {
   Container,
   Content,
@@ -165,8 +171,11 @@ class MyCart extends Component {
     });
   };
 
-  render() {
+  componentDidMount() {
     this.isLoggedInStatus();
+  }
+
+  render() {
     return (
       <Container>
         <Header {...this.props} />

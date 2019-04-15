@@ -6,11 +6,11 @@ const INITIAL_STATE = {
 const { CATEGORIES_GET } = categoriesConstants;
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case CATEGORIES_GET:
+    case CATEGORIES_GET + "_FULFILLED":
       return {
         ...state,
-        data: action.payload.rows,
-        pages: action.payload.pages
+        data: action.payload.data.rows,
+        pages: action.payload.data.pages
       };
     default:
       return state;

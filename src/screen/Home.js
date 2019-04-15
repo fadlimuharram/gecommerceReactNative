@@ -68,7 +68,7 @@ class Home extends Component {
   render() {
     const { categories, products } = this.props;
 
-    if (categories.length > 0 && products) {
+    if (categories.length > 0 && products.length > 0) {
       return (
         <Content style={styles.content}>
           <Card>
@@ -134,16 +134,16 @@ class Home extends Component {
           <Text style={styles.txtTitle}>Kategori</Text>
           <ScrollView horizontal={true}>
             <FlatList
-              data={this.props.categories}
+              data={categories}
               renderItem={this._renderItemCategory}
               keyExtractor={this._keyExtractor}
-              numColumns={this.props.categories.length / 2}
+              numColumns={categories.length / 2}
             />
           </ScrollView>
 
           <Text style={styles.txtTitle}>Rekomendasi</Text>
           <FlatList
-            data={this.props.products}
+            data={products}
             renderItem={this.renderItemRecommendation}
             keyExtractor={this._keyExtractor}
             numColumns={2}
