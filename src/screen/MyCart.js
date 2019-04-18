@@ -29,6 +29,13 @@ class MyCart extends Component {
     isMyCartShow: true
   };
 
+  onPressToOrderDetail = (id, city_id) => {
+    this.props.navigation.navigate("OrderDetail", {
+      id,
+      city_id
+    });
+  };
+
   _onPressToCheckOut = () => {
     // this.props.navigation.navigate("Checkout", {
     //   totalCart: stringToRupiah(this.state.total.toString())
@@ -68,8 +75,21 @@ class MyCart extends Component {
   };
 
   deleteCart = id => {
-    this.props.deleteCart(id, this.props.access_token);
-    this.props.getCart(this.props.access_token);
+    Alert.alert("Hapus", "Yakin Akan Di Hapus", [
+      {
+        text: "Tidak",
+        onPress: () => console.warn("NO Pressed"),
+        style: "cancel"
+      },
+      {
+        text: "Ya",
+        onPress: () => {
+          this.props.deleteCart(id, this.props.access_token);
+          this.props.getCart(this.props.access_token);
+          this.props.navigation.navigate("MyCart");
+        }
+      }
+    ]);
   };
 
   generateTotal = () => {
@@ -106,7 +126,7 @@ class MyCart extends Component {
       <AddressCart
         title={val.title}
         address={val.address}
-        _onPress={this._onPressToCheckOut}
+        _onPress={() => this.onPressToOrderDetail(val.id, val.city_id)}
       />
     ));
   };

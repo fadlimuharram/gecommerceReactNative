@@ -35,6 +35,8 @@ export const register = (
   axios
     .post(fullUri, { username, password, email, confirm_password })
     .then(response => {
+      _storeData("access_token", JSON.stringify(response.data.access_token));
+      _storeData("user", JSON.stringify(response.data.user));
       dispatch({ type: REGISTER_SUCCESS, payload: response.data });
     })
     .catch(err => {

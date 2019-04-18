@@ -11,7 +11,7 @@ import SideBar from "../components/Sidebar";
 import SettingScreen from "../screen/Settings";
 import AddAddress from "../screen/AddAddress";
 import Logout from "../screen/Logout";
-
+import OrderDetail from "../screen/OrderDetail";
 export const drawerNav = createDrawerNavigator(
   {
     Home: {
@@ -77,6 +77,9 @@ export const rootStack = createStackNavigator(
     },
     AddAddress: {
       screen: AddAddress
+    },
+    OrderDetail: {
+      screen: OrderDetail
     }
   },
   {

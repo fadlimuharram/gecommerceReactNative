@@ -12,6 +12,8 @@ import ProfileCard from "../components/settings/ProfileCard";
 import AddressSettingCard from "../components/settings/AddressCard";
 import PasswordCard from "../components/settings/PasswordCard";
 import { connect } from "react-redux";
+import Config from "react-native-config";
+
 class Settings extends Component {
   componentDidMount() {
     this.isLoggedInStatus();
@@ -35,6 +37,7 @@ class Settings extends Component {
           <ProfileCard
             username={this.props.userData.username}
             email={this.props.userData.email}
+            picture={this.props.userData.picture}
           />
           <AddressSettingCard {...this.props} />
           <PasswordCard />

@@ -17,6 +17,7 @@ import {
   ArrowRightToggle,
   MapsLogo
 } from "../../assets/svg/Love";
+import Config from "react-native-config";
 class ProfileCard extends Component {
   state = {
     avatarSource: null,
@@ -87,8 +88,7 @@ class ProfileCard extends Component {
               <Image
                 style={styles.avatar}
                 source={{
-                  uri:
-                    "https://images2.alphacoders.com/644/thumb-1920-644961.png"
+                  uri: Config.PIC_URI + this.props.picture
                 }}
               />
             ) : (
@@ -127,7 +127,7 @@ class ProfileCard extends Component {
             <Thumbnail
               large
               source={{
-                uri: "https://images2.alphacoders.com/644/thumb-1920-644961.png"
+                uri: Config.PIC_URI + this.props.picture
               }}
             />
           </View>

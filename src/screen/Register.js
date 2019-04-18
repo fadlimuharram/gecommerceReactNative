@@ -59,6 +59,7 @@ class Register extends Component {
                   </Item>
                   <Item>
                     <Input
+                      textContentType="emailAddress"
                       placeholder="email"
                       placeholderTextColor="white"
                       value={this.state.email}
@@ -67,6 +68,8 @@ class Register extends Component {
                   </Item>
                   <Item>
                     <Input
+                      secureTextEntry={true}
+                      textContentType="password"
                       placeholder="password"
                       placeholderTextColor="white"
                       onChangeText={password => this.setState({ password })}
@@ -75,6 +78,8 @@ class Register extends Component {
                   </Item>
                   <Item>
                     <Input
+                      secureTextEntry={true}
+                      textContentType="password"
                       placeholder="confirm password"
                       placeholderTextColor="white"
                       value={this.state.confirm_password}

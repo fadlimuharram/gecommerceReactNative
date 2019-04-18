@@ -49,6 +49,7 @@ class Login extends Component {
                 <Form>
                   <Item style={styles.itemInput}>
                     <Input
+                      textContentType="emailAddress"
                       placeholder="Email"
                       placeholderTextColor="white"
                       selectionColor="white"
@@ -58,6 +59,8 @@ class Login extends Component {
                   </Item>
                   <Item style={styles.itemInput} floatingLabel last>
                     <Input
+                      secureTextEntry={true}
+                      textContentType="password"
                       placeholder="Password"
                       placeholderTextColor="white"
                       value={this.state.password}

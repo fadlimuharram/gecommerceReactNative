@@ -1,10 +1,11 @@
 import { addressConstants } from "../_constants";
 
 const INITIAL_STATE = {
-  data: []
+  data: [],
+  detailData: {}
 };
 
-const { ADDRESS_GET } = addressConstants;
+const { ADDRESS_GET, ADDRESS_GET_BY_ID } = addressConstants;
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -12,6 +13,12 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         data: action.payload
+      };
+
+    case ADDRESS_GET_BY_ID:
+      return {
+        ...state,
+        detailData: action.payload
       };
     default:
       return state;

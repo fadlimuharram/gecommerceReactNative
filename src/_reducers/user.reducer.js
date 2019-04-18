@@ -26,7 +26,8 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         user: action.payload.user,
-        access_token: action.payload.access_token
+        access_token: action.payload.access_token,
+        isLoggedIn: true
       };
     case GET_USER_DATA:
       return {

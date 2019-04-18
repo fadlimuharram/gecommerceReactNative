@@ -48,6 +48,7 @@ class AuthLoadingScreen extends Component {
       const token = parseToken.type + " " + parseToken.token;
       this.props.getUser(token);
     }
+
     // alert(JSON.stringify(this.props.user));
   }
 
@@ -55,7 +56,7 @@ class AuthLoadingScreen extends Component {
     return (
       <LinearGradient colors={["#3BCEAC", "#28AE5E"]} style={styles.content}>
         <StatusBar backgroundColor="#3BCEAC" barStyle="light-content" />
-        <PulseIndicator color="white" size={100} />
+        <BallIndicator color="white" size={100} />
         <View style={styles.logoContainer}>
           <LogoIcon width="70" height="70" color="white" />
           <Text style={styles.txtLogo}>GECOMMERCE</Text>
