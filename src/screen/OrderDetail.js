@@ -12,7 +12,7 @@ import {
   Button
 } from "native-base";
 import { connect } from "react-redux";
-import { getAddressById } from "../_actions";
+import { getAddressById, postTransaction } from "../_actions";
 import Config from "react-native-config";
 import { stringToRupiah } from "../_helpers/currency";
 import axios from "axios";
@@ -111,6 +111,50 @@ class OrderDetail extends Component {
     }
   };
 
+  onBtnPayClick = () => {
+    const {
+      address,
+      province,
+      province_id,
+      city,
+      city_id,
+      postal,
+      receiver,
+      phone
+    } = this.props.detail;
+
+    const data = {
+      address,
+      province,
+      province_id,
+      city,
+      city_id,
+      postal,
+      receiver,
+      phone,
+      courier: this.state.selectedCourier.service,
+      weight: this.state.weight,
+      eta: this.state.selectedCourier.cost[0].etd,
+      shipping_price: this.state.selectedCourier.cost[0].value,
+      total_shopping: this.props.total,
+      total: this.props.total + this.state.selectedCourier.cost[0].value
+    };
+
+    const dataProduct = [];
+
+    this.props.cart.forEach(val => {
+      dataProduct.push({
+        name: val.product.name,
+        price: val.product.price * val.quantity,
+        quantity: val.quantity,
+        weight: val.product.weight * val.quantity
+      });
+    });
+
+    this.props.postTransaction(data, dataProduct, this.props.access_token);
+    this.props.navigation.navigate("Home");
+  };
+
   render() {
     if (this.props.detail.id && this.state.result) {
       const { address, title, receiver, phone } = this.props.detail;
@@ -204,7 +248,7 @@ class OrderDetail extends Component {
                   </Text>
                 </Body>
               </CardItem>
-              <Button style={styles.btnPay} full>
+              <Button onPress={this.onBtnPayClick} style={styles.btnPay} full>
                 <Text style={styles.txtBtnPay}>Bayar</Text>
               </Button>
             </Card>
@@ -229,7 +273,7 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { getAddressById }
+  { getAddressById, postTransaction }
 )(OrderDetail);
 
 const styles = StyleSheet.create({

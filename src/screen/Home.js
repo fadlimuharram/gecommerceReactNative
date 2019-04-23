@@ -19,6 +19,7 @@ import Swiper from "react-native-swiper";
 import { withHeaderSideBar } from "./withHeaderHOC";
 import { getCategories, getProducts, clearUser } from "../_actions";
 import Config from "react-native-config";
+import Loading from "./Loading";
 
 class Home extends Component {
   onPressCategory = categoryId => {
@@ -151,7 +152,7 @@ class Home extends Component {
         </Content>
       );
     } else {
-      return <Text>kosong</Text>;
+      return <Loading />;
     }
   }
 }

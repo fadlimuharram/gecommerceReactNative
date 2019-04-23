@@ -21,6 +21,7 @@ import Swiper from "react-native-swiper";
 import { Love } from "../assets/svg/Love";
 import { stringToRupiah } from "../_helpers";
 import Config from "react-native-config";
+import Loading from "./Loading";
 
 class Detail extends Component {
   componentDidMount() {
@@ -179,7 +180,7 @@ class Detail extends Component {
         </Container>
       );
     } else {
-      return <Text>Kosong</Text>;
+      return <Loading />;
     }
   }
 }

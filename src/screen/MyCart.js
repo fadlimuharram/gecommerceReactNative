@@ -67,6 +67,8 @@ class MyCart extends Component {
     if (oldQuantity - 1 > 0) {
       const quantity = oldQuantity - 1;
       this.props.updatCart(id, quantity, this.props.access_token);
+    } else {
+      this.deleteCart(id);
     }
   };
 
@@ -106,6 +108,7 @@ class MyCart extends Component {
   _renderItem = ({ item }) => {
     return (
       <MyCartCard
+        {...this.props}
         id={item.id}
         uri={Config.PIC_URI + item.product.pictures[0].cover}
         title={item.product.name}
@@ -195,23 +198,33 @@ class MyCart extends Component {
     this.isLoggedInStatus();
   }
 
+  renderComponent = () => {
+    if (this.props.dataCart && this.props.dataCart.length > 0) {
+      return (
+        <React.Fragment>
+          {this.renderMyCart()}
+          <View style={styles.contentCheckout}>
+            <View>
+              <Text style={styles.txtTotal}>Total</Text>
+              <Text style={styles.txtPrice}>
+                {/* {stringToRupiah(this.state.total)} */}
+                {stringToRupiah(String(this.props.totalCart))}
+              </Text>
+            </View>
+            <View>{this.renderMyCartButton()}</View>
+          </View>
+        </React.Fragment>
+      );
+    } else {
+      return <Text>kosong</Text>;
+    }
+  };
+
   render() {
     return (
       <Container>
         <Header {...this.props} />
-
-        {this.renderMyCart()}
-
-        <View style={styles.contentCheckout}>
-          <View>
-            <Text style={styles.txtTotal}>Total</Text>
-            <Text style={styles.txtPrice}>
-              {/* {stringToRupiah(this.state.total)} */}
-              {stringToRupiah(String(this.props.totalCart))}
-            </Text>
-          </View>
-          <View>{this.renderMyCartButton()}</View>
-        </View>
+        {this.renderComponent()}
       </Container>
     );
   }

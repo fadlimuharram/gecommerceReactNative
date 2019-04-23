@@ -27,7 +27,7 @@ const HomeCardCategory = ({ uri, title, bgColor, onPress }) => (
   <TouchableOpacity onPress={onPress}>
     <Card transparent style={styles.card}>
       <CardItem cardBody>
-        <Thumbnail large source={{ uri }} style={styles.img} />
+        <Thumbnail small source={{ uri }} style={styles.img} />
       </CardItem>
       <CardItem style={styles.cardItem}>
         <Body>

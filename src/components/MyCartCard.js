@@ -14,7 +14,7 @@ import {
   Form
 } from "native-base";
 
-import { DeleteBtnX, PlusLogo, MinusLogo } from "../assets/svg/Love";
+import { Trash, PlusLogo, MinusLogo } from "../assets/svg/Love";
 import { stringToRupiah } from "../_helpers";
 import { connect } from "react-redux";
 import { updatCart, getCart } from "../_actions";
@@ -41,6 +41,9 @@ class MyCartCard extends React.Component {
       this.setState({
         tempQuantity: this.props.quantity
       });
+    } else if (text <= 0 && text !== "") {
+      this.props._onDeleteCart(this.props.id);
+      this.props.navigation.navigate("MyCart");
     }
 
     this.setState({
@@ -85,7 +88,7 @@ class MyCartCard extends React.Component {
                 onPress={_onDeleteCart}
                 style={styles.btnDelete}
               >
-                <DeleteBtnX width="10" height="10" color="black" />
+                <Trash width="20" height="20" color="black" />
               </Button>
 
               <View style={styles.priceContainer}>
